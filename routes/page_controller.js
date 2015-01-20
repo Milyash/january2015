@@ -4,6 +4,7 @@
 var express = require('express');
 var router = express.Router();
 var Page = require('./../models/page');
+var uuid = require('node-uuid');
 fs = require('fs');
 
 router
@@ -21,44 +22,43 @@ router
         Page.findById(pageId,
             function (err, page) {
                 if (err) console.log(err);
-                if (page != undefined) {
-                    console.log(page);
-                    if (!check_correctness(page).is_correct)
-                        res.json({"message": check_correctness(page).message});
-                    else {
-                        page.name = req.body.name;
-                        page.url = req.body.url;
-                        page.active = true;
-                        page.save(function (err) {
-                            if (err)
-                                res.send(err);
-                            res.json({"message": "Changes saved!"});
-                        })
-                    }
-                } else {
-                    res.json({"message": "Error: The page is not found!"})
+                if (page == undefined) {
+                    res.send(404);
+                    return
                 }
+                page.name = req.body.name;
+                page.url = req.body.url;
+                page.active = true;
+                page.save(function (err) {
+                    if (err) {
+                        console.log(err)
+                        //res.json(err);
+                        res.send(err);
+                        return
+                    }
+                    res.json({"message": "Changes saved!"});
+                })
             }
         )
         ;
     })
     .delete('/', function (req, res) {
         var pageId = req.body.page_id;
-        console.log("!");
         Page.findById(pageId,
             function (err, page) {
                 if (err) console.log(err);
-                if (page != undefined) {
-                    page.active = false;
-                    page.save(function (err) {
-                        if (err)
-                            res.send(err);
-                        res.json({"message": "Changes saved!"});
-                    })
+                if (page == undefined) {
+                    res.send(404);
+                    return
                 }
-                else {
-                    res.json({"message": "Error: The page is not found!"})
-                }
+                page.active = false;
+                page.save(function (err) {
+                    if (err) {
+                        res.json(err);
+                        return
+                    }
+                    res.json({"message": "Changes saved!"});
+                })
             }
         )
 
@@ -70,15 +70,13 @@ router
         page.url = req.body.url;
         page.active = true;
         page.token = generate_token(page);
-        if (!check_correctness(page).is_correct)
-            res.json({"message": check_correctness(page).message});
-        else {
-            page.save(function (err) {
-                if (err)
-                    res.send(err);
-                res.json({"message": "Changes saved!"});
-            })
-        }
+        page.save(function (err) {
+            if (err) {
+                res.send(err);
+                return
+            }
+            res.json({"message": "Changes saved!"});
+        })
     })
 
     .get('/snipet/:id', function (req, res) {
@@ -111,14 +109,7 @@ router
             });
     })
 
-function check_correctness(page) {
-
-    //check name
-    //check url(format, if exists in database)
-    return {"is_correct": true, "message": ""};
-}
-
 function generate_token(page) {
-    return page.url + page.name;
+    return uuid.v4();
 }
 module.exports = router;

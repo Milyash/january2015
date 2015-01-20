@@ -118,14 +118,23 @@ block content
                     });
         })
 
+        var formValidation = function(data, $form) {
+            $form.find(".has-error").removeClass("has-error")
+            if(data.errors) {
+                for(var key in data.errors)
+                {
+                    var path = data.errors[key].path;
+                    $form.find('[name="' + path + '"]').parents('.form-group').addClass("has-error");
+                }
+            } else {
+                location.reload()
+            }
+        }
 
         $('#edit-modal-save').click(function () {
             var $form = $('#edit-modal-form');
             $.post($form.attr('action'), $form.serialize())
-                    .done(function () {
-                        //$("#webpageEditModal").modal('hide');
-                        location.reload();
-                    })
+                    .done(function(data) { formValidation(data, $form) })
         })
 
         $("#create-modal-save").click(function () {
@@ -135,10 +144,7 @@ block content
                 type: 'PUT',
                 data: $form.serialize()
             })
-                    .done(function () {
-                        alert("New page created!");
-                        location.reload();
-                    });
+                    .done(function(data) { formValidation(data, $form) });
         })
 
         $("#delete-page").click(function () {
