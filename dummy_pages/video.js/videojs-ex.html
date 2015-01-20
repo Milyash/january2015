@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video.js test </title>
+    <script src="../Libraries/jquery-1.11.0.min.js"></script>
+    <script src="video-js/video.js"></script>
+    <!--<script src="video-js/youtube.js"></script>-->
+
+    <link href="video-js/video-js.css" rel="stylesheet">
+    <link href="../style_player.css" rel="stylesheet">
+</head>
+
+<body style="background-color: #46428A">
+
+<div style="margin: 50px auto; width:640px">
+    <video id="example_video_1" class="video-js vjs-default-skin"
+           controls preload="auto" width="640" height="264"
+           poster="http://video-js.zencoder.com/oceans-clip.png"
+           data-setup='{"example_option":true}'>
+        <source src="http://video-js.zencoder.com/oceans-clip.mp4" type='video/mp4'/>
+    </video>
+    <br>
+    <video id="example_video_2" class="video-js vjs-default-skin"
+           controls preload="auto" width="640" height="264"
+           poster="http://video-js.zencoder.com/oceans-clip.png"
+           data-setup='{"example_option":true}'>
+        <source src="http://video-js.zencoder.com/oceans-clip.mp4" type='video/mp4'/>
+    </video>
+    <!--<video id="example_video_3" class="video-js vjs-default-skin"-->
+    <!--controls preload="auto" width="640" height="264"-->
+    <!--data-setup='{ "techOrder": ["youtube"], "src": "https://www.youtube.com/watch?v=uU6U-8LP1DY" }'>-->
+    <!--</video>-->
+
+</div>
+
+
+<div id="result_container">Result:
+    <button id="clear"> Clear!</button>
+    <!--<p id="variable">  </p>-->
+    <ul id="result">
+    </ul>
+</div>
+
+<script src="videojs-snippet.js"></script>
+</body>
+</html>

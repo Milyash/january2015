@@ -1,0 +1,71 @@
+body{
+    font-family: Verdana, Arial, sans-serif ;
+    padding:0px
+}
+.header-block{
+    width: 100%;
+    background-color:#2289ae;
+    color: white;
+    margin: 0px auto;
+    padding: 10px 0px;
+}
+
+.header{
+    width: 900px;
+    height: 100px;
+    margin: 10px auto;
+}
+
+.header a#logo{
+    width: 100px;
+    text-align: center;
+    color: white;
+    display: block;
+    font: 15px bold;
+    font-family: Verdana, Arial, sans-serif ;
+    float: left;
+}
+
+.header #logo img{
+    width: 100px;
+}
+
+#user{
+    width: 150px;
+    text-align: center;
+    display: block;
+    font: 12px bold;
+    font-family: Verdana, Arial, sans-serif ;
+}
+
+#user img{
+    width: 30px;
+}
+
+#content{
+    width: 1000px;
+    margin: 0px auto;
+    border: 1px solid #e7e7e7;
+    min-height: 100px;
+    padding: 20px;
+}
+
+#content #menu{
+    width: 20%;
+    float: left;
+}
+
+#content #data{
+    margin: 0px auto 0px 20px;
+    width: 75%;
+    float: right;
+}
+
+.snippet-text{
+    margin: 20px 0px;
+    font-size: 10px;
+}
+
+.webpage-form{
+    margin: 20px 0px;
+}

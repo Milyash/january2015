@@ -1,0 +1,10 @@
+body{
+	font: bold 14px Verdana;
+	}
+
+#result_container{
+	width: 600px;
+	padding: 20px;
+	margin: 30px auto;
+	background-color: white;
+}

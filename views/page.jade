@@ -1,0 +1,158 @@
+extends layout
+
+block content
+    #data
+        h4 Registered web pages to track
+        button.btn.btn-success.pull-right(type="button", data-toggle="modal", data-target="#webpageCreateModal", style="margin:0px 2px")
+            | New Page +
+        .clearfix
+        if webpages.length > 0
+            table.table.table-striped
+                thead
+                    tr
+                        th #
+                        th Name
+                        th Url
+                        th
+                tbody
+                each webpage, i in webpages
+                    tr
+                        td #{i + 1}.
+                        td
+                            a(href="/page/#{webpage._id}") #{webpage.name}
+                        td
+                            a(href="#{webpage.url}") #{webpage.url}
+                        td
+                            button#delete-page.btn.btn-danger.btn-xs(type="button", data-id="#{webpage._id}", style="margin:0px 2px")
+                                span.glyphicon.glyphicon-remove
+                                | Delete
+                            button.btn.btn-warning.btn-xs(type="button", data-toggle="modal", data-target="#webpageEditModal", data-name="#{webpage.name}", data-url="#{webpage.url}", data-id="#{webpage._id}", style="margin:0px 2px")
+                                span.glyphicon.glyphicon-pencil
+                                | Edit
+                            button.btn.btn-success.btn-xs(type="button", data-toggle="modal", data-target="#webpageSnipetModal", data-name="#{webpage.name}", data-url="#{webpage.url}", data-id="#{webpage._id}", style="margin:0px 2px")
+                                | Get Snippet
+
+        else
+            p There are no web pages registered for tracking!
+
+    #webpageCreateModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="exampleModalLabel", aria-hidden="true")
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    button.close(type="button", data-dismiss="modal")
+                        span(aria-hidden="true") &#215;
+                        span.sr-only Close
+                    h4#webpageCreateModalLabel.modal-title Create new web page
+                .modal-body
+                    form#create-modal-form(role="form", method="put", action="/page")
+                        .form-group
+                            label.control-label(for="webpage_create_name") Name:
+                            input#webpage_name.form-control(type="text", name="name")
+                        .form-group
+                            label.control-label(for="webpage_create_url") URL:
+                            input#webpage-url.form-control(type="text", name="url")
+                        .modal-footer
+                            button.btn.btn-default(type="button", data-dismiss="modal") Close
+                            button#create-modal-save.btn.btn-primary(type="button") Save
+
+    #webpageEditModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="exampleModalLabel", aria-hidden="true")
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    button.close(type="button", data-dismiss="modal")
+                        span(aria-hidden="true") &#215;
+                        span.sr-only Close
+                    h4#webpageEditModalLabel.modal-title Edit web page info
+                .modal-body
+                    form#edit-modal-form(role="form", method="post", action="/page")
+                        .form-group
+                            label.control-label(for="webpage_edit_name") Name:
+                            input#webpage_edit_name.form-control(type="text", name="name")
+                        .form-group
+                            label.control-label(for="webpage_edit_url") URL:
+                            input#webpage_edit_url.form-control(type="text", name="url")
+                        .modal-footer
+                            input#webpage_edit_id(type="hidden", name="page_edit_id")
+                            button.btn.btn-default(type="button", data-dismiss="modal") Close
+                            button#edit-modal-save.btn.btn-primary(type="button") Save
+    #webpageSnipetModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="exampleModalLabel", aria-hidden="true")
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    button.close(type="button", data-dismiss="modal")
+                        span(aria-hidden="true") &#215;
+                        span.sr-only Close
+                    h4.modal-title Edit web page info
+                .modal-body
+
+
+                .modal-footer
+                    button.btn.btn-default(type="button", data-dismiss="modal") Close
+    script.
+        $('#webpageEditModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var webpageName = button.data('name');
+            var webpageUrl = button.data('url');
+            var webpageId = button.data('id');
+
+            var modal = $(this);
+            modal.find('.modal-title').text('Edit web page ' + webpageName);
+            modal.find('.modal-body input#webpage_edit_name').val(webpageName);
+            modal.find('.modal-body input#webpage_edit_url').val(webpageUrl);
+            modal.find('.modal-body input#webpage_edit_id').val(webpageId);
+
+        })
+
+        $('#webpageSnipetModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var modal = $(this);
+            var webpageName = button.data('name');
+            var webpageUrl = button.data('url');
+            var webpageId = button.data('id');
+
+            modal.find('.modal-title').text('Snipet for ' + webpageName + ' on ' + webpageUrl);
+
+            $.get('/page/snipet/' + webpageId)
+                    .done(function (data) {
+                        modal.find('.modal-body').text(data.snipet);
+                    });
+        })
+
+
+        $('#edit-modal-save').click(function () {
+            var $form = $('#edit-modal-form');
+            $.post($form.attr('action'), $form.serialize())
+                    .done(function () {
+                        //$("#webpageEditModal").modal('hide');
+                        location.reload();
+                    })
+        })
+
+        $("#create-modal-save").click(function () {
+            var $form = $('#create-modal-form');
+            $.ajax({
+                url: '/page',
+                type: 'PUT',
+                data: $form.serialize()
+            })
+                    .done(function () {
+                        alert("New page created!");
+                        location.reload();
+                    });
+        })
+
+        $("#delete-page").click(function () {
+            var page_id = $(this).data('id');
+            $.ajax({
+                url: '/page',
+                type: 'DELETE',
+                data: {'page_id': page_id}
+            })
+                    .done(function () {
+                        alert("The page deleted!");
+                        location.reload();
+                    });
+        })
+
+
+

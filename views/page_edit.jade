@@ -1,0 +1,70 @@
+doctype html
+html
+   head(lang="en")
+      meta(charset="UTF-8")
+      title
+      link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css")
+      link(rel="stylesheet", href="../public/stylesheets/user.css")
+      script(src="//code.jquery.com/jquery-1.11.0.min.js")
+      script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js")
+   body
+      nav.navbar.navbar-default(role="navigation", style="width:1000px; margin: 0px auto; background-color: antiquewhite")
+         .container-fluid
+            .navbar-header
+               button.navbar-toggle.collapsed(type="button", data-toggle="collapse", data-target="#bs-example-navbar-collapse-1")
+                  span.sr-only Toggle navigation
+                  span.icon-bar
+                  span.icon-bar
+                  span.icon-bar
+               a.navbar-brand(href="#")
+                  | Video Statistic app
+            #bs-example-navbar-collapse-1.collapse.navbar-collapse
+               ul.nav.navbar-nav.navbar-right
+                  li.dropdown
+                     a#user.dropdown-toggle(href="#", data-toggle="dropdown", role="button", aria-expanded="false")
+                        img(src="../public/images/userpic.gif")
+                        | User
+                        span.caret
+                     ul.dropdown-menu(role="menu")
+                        li
+                           a(href="#")
+                              span.glyphicon.glyphicon-arrow-left
+                              | Logout
+      #content
+         ul#menu.nav.nav-pills.nav-stacked
+            li.active(role="presentation")
+               a(href="#") Web pages
+            li(role="presentation")
+               a(href="#") Profile
+            li(role="presentation")
+               a(href="#") Messages
+         #data
+            h4
+               a(href="user.html") Registered web pages to track
+               | / My special webpage
+            form.webpage-form.form-horizontal(role="form")
+               .form-group
+                  label.col-sm-3.control-label(for="webpageName") Web page name
+                  .col-sm-9
+                     input#webpageName.form-control(type="text", value="My special webpage")
+               .form-group
+                  label.col-sm-3.control-label(for="webpageUrl") Url
+                  .col-sm-9
+                     input#webpageUrl.form-control(type="url", value="ww.yandex.ru")
+               button.btn.btn-success.pull-right(type="submit") Submit
+               .clearfix
+               .panel.panel-default.snippet-text
+                  #webpage-snipet-heading.panel-heading(role="tab")
+                     h4.panel-title
+                        a(data-toggle="collapse", data-parent="#accordion", href="#webpage-snipet-collapse", aria-expanded="false", aria-controls="webpage-snipet-collapse")
+                           | Snippet for web page
+                  #webpage-snipet-collapse.panel-collapse.collapse(role="tabpanel", aria-labelledby="webpage-snipet-heading")
+                     .panel-body
+                        | Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
+                        | 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt
+                        | laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin
+                        | coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes
+                        | anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
+                        | occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven"t heard
+                        | of them accusamus labore sustainable VHS.
+         .clearfix
