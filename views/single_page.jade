@@ -2,7 +2,7 @@ extends layout
 
 block content
     #data
-        if page.length > 0
+        if page
             h4 Page #{page.name}
             button#delete-page.btn.btn-danger.btn-xs.pull-right(type="button", data-id="#{page._id}", style="margin:0px 2px")
                 span.glyphicon.glyphicon-remove
@@ -13,9 +13,57 @@ block content
             button.btn.btn-success.btn-xs.pull-right(type="button", data-toggle="modal", data-target="#webpageSnipetModal", data-name="#{page.name}", data-url="#{page.url}", data-id="#{page._id}", style="margin:0px 2px")
                 | Get Snippet
             .clearfix
-            a.btn.btn-primary(style="margin:0px 2px", href="#{page.url}")
+            a.btn.btn-primary(style="margin:0px 2px 20px 2px", href="#{page.url}")
                 | Go to the site
-            .clearfix
+
+            ul.nav.nav-tabs(role="tablist")
+                li.active(role="presentation")
+                    a(href="#videos", aria-controls="videos", role="tab", data-toggle="tab") Videos
+                li(role="presentation")
+                    a(href="#statistics", aria-controls="statistics", role="tab", data-toggle="tab") Statistics
+
+            .tab-content
+                .tab-pane.fade.in.active#videos(role="tabpanel", style="margin: 20px;")
+                    h4 Registered web pages to track
+
+                    //if webpages.length > 0
+                    table.table.table-striped
+                        thead
+                            tr
+                                th #
+                                th Name
+                                th Url
+                                th Preview
+                        tbody
+                            //each webpage, i in webpages
+                            tr
+                                td 1.
+                                td Video
+                                td
+                                    a(href="#") ya.ru
+                                td
+                                    img(src="/images/video_preview.png", style="width:150px")
+
+                    //else
+                        p There are no web pages registered for tracking!
+
+                .tab-pane.fade#statistics(role="tabpanel", style="margin: 20px;")
+                    ul.nav.nav-tabs(role="tablist")
+                        li.active(role="presentation")
+                            a(href="#stat1", aria-controls="stat1", role="tab", data-toggle="tab") Statistics 1
+                        li(role="presentation")
+                            a(href="#stat2", aria-controls="stat2", role="tab", data-toggle="tab") Statistics 2
+
+                    .tab-content
+                        .tab-pane.fade.in.active#stat1(role="tabpanel", style="margin: 10px;")
+                            h5 Registered web pages to track
+                            img(src="/images/g1.png", style="width:600px; margin: 10px auto")
+
+                        .tab-pane.fade#stat2(role="tabpanel", style="margin: 10px; margin: 10px auto")
+                            h5 Registered web pages to track 2
+                            img(src="/images/g2.png", style="width:600px")
+
+
         else
             h4 This page doesn't exist!
             a.btn.btn-danger(href="/page")
@@ -83,7 +131,6 @@ block content
                         modal.find('.modal-body').text(data.snipet);
                     });
         })
-
 
         $('#edit-modal-save').click(function () {
             var $form = $('#edit-modal-form');
