@@ -16,6 +16,8 @@
     "mongoose": "*",
     "mongoose-schema-extend": "*",
     "fs": "*",
-    "node-uuid": "*"
+    "node-uuid": "*",
+    "mongoose-relationship": "*",
+    "nodemailer": "*"
   }
 }

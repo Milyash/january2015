@@ -128,7 +128,11 @@ block content
                 for(var key in data.errors)
                 {
                     var path = data.errors[key].path;
-                    $form.find('[name="' + path + '"]').parents('.form-group').addClass("has-error");
+                    $formGroup = $form.find('[name="' + path + '"]').parents('.form-group')
+                    $helpBlock = $formGroup.find('.help-block').length ? $formGroup.find('.help-block') :
+                            $('<p class="help-block"></p>').appendTo($formGroup)
+                    $formGroup.addClass("has-error");
+                    $helpBlock.text(data.errors[key].message)
                 }
             } else {
                 location.reload()

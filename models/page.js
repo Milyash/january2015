@@ -6,7 +6,6 @@ var VideoSchema = require('./video');
 var relationship = require("mongoose-relationship");
 var Schema = mongoose.Schema;
 
-
 var WebpageSchema = new Schema({
     name: {type: String, trim: true},
     url: {type: String, unique: true, lowercase: true, trim: true},
@@ -23,13 +22,12 @@ WebpageSchema.path('url').validate(function (value) {
     return /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/.test(value);
 }, 'Invalid url');
 
-//WebpageSchema.path('url').validate(function(value, done) {
-//    this.model('Page').count({ url: value }, function(err, count) {
-//        if (err) {
-//            return done(err);
-//        }
-//        done(!count);
-//    });
-//}, 'Url already exists');
+WebpageSchema.path('url').validate(function(value, done) {
+    if (this.isNew || this.isModified('email')) {
+        this.model('Page').count({ url: value }, function(err, count) {
+            done(!err && !count);
+        });
+    } else done(true);
+}, 'Url already exists');
 
 module.exports = mongoose.model('Page', WebpageSchema);

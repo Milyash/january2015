@@ -42,6 +42,7 @@ db.once('open', function callback () {
     console.log("Connection to database " + parameters.db_name + " established");
 });
 
+require('./models/user')
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
