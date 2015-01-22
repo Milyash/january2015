@@ -2,10 +2,12 @@ $("#clear").click(function () {
     $("#result").empty();
 });
 
+// add video alt
+
 var iframe = $('.video');
 $.each(iframe, function (i, video) {
     var player = $f(video);
-    var urlBase = "http://localhost:8080";
+    var urlBase = "http://localhost:3000";
     player.addEvent('ready', function () {
         var result = $("#result");
         var current_volume;
@@ -33,7 +35,7 @@ $.each(iframe, function (i, video) {
                     data.to_volume = new_volume;
                     data.time = current_time;
                     data.video_id = id;
-                    postData(data, urlBase + "/api/volumechanges");
+                    postData(data, urlBase + "/api/volumechange");
                     result.append("<li>" + id + " muted! from " + current_volume + "to " + new_volume + "</li>");
                     current_volume = new_volume;
                 }
@@ -51,7 +53,7 @@ $.each(iframe, function (i, video) {
             dataToSend.event = "play";
             dataToSend.time = current_time;
             dataToSend.video_id = id;
-            postData(dataToSend, urlBase + "/api/plays");
+            postData(dataToSend, urlBase + "/api/play");
             result.append("<li>" + id + " -> play!, time = " + current_time + "sec </li>");
         };
         function onPause(id) {
@@ -62,7 +64,7 @@ $.each(iframe, function (i, video) {
             dataToSend.event = "pause";
             dataToSend.time = current_time;
             dataToSend.video_id = id;
-            postData(dataToSend, urlBase + "/api/pauses");
+            postData(dataToSend, urlBase + "/api/pause");
             result.append("<li>" + id + " -> pause!, time = " + current_time + "sec </li>");
         };
         function onSeek(data, id) {
@@ -74,7 +76,7 @@ $.each(iframe, function (i, video) {
             dataToSend.time_from = current_time;
             dataToSend.time_to = data.seconds;
             dataToSend.video_id = id;
-            postData(dataToSend, urlBase + "/api/seeks");
+            postData(dataToSend, urlBase + "/api/seek");
             result.append("<li>" + id + " -> seeking! from " + current_time + " to " + data.seconds.toFixed(2) + "sec </li>");
         };
     });

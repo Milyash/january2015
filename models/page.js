@@ -1,20 +1,22 @@
 /**
  * Created by Milya on 10.12.2014.
  */
-var mongoose = require('mongoose')
-
+var mongoose = require('mongoose');
+var VideoSchema = require('./video');
+var relationship = require("mongoose-relationship");
 var Schema = mongoose.Schema;
 
+
 var WebpageSchema = new Schema({
-    //videos: [{type: Schema.Types.ObjectId, ref: 'Video'}],
-    name: { type: String, trim: true},
-    url: { type: String, unique: true, lowercase: true, trim: true},
+    name: {type: String, trim: true},
+    url: {type: String, unique: true, lowercase: true, trim: true},
     token: String,
-    active: Boolean
+    active: Boolean,
+    videos: [{type: Schema.ObjectId, ref: "Video"}]
 });
 
 WebpageSchema.path('name').validate(function (value) {
-    return /^\w+$/i.test(value);
+    return /[a-zA-Z0-9\\\-\ ]+/.test(value);
 }, 'Invalid name');
 
 WebpageSchema.path('url').validate(function (value) {

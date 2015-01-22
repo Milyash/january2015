@@ -21,15 +21,19 @@ block content
                         td
                             a(href="/page/#{webpage._id}") #{webpage.name}
                         td
-                            a(href="#{webpage.url}") #{webpage.url}
-                        td
+                            a(href="#{webpage.url}")
+                                if(webpage.url.length > 50)
+                                    | #{webpage.url.substr(1, 50) + '...'}
+                                else
+                                    | #{webpage.url}
+                        td(style="min-width: 250px")
                             button#delete-page.btn.btn-danger.btn-xs(type="button", data-id="#{webpage._id}", style="margin:0px 2px")
                                 span.glyphicon.glyphicon-remove
                                 | Delete
                             button.btn.btn-warning.btn-xs(type="button", data-toggle="modal", data-target="#webpageEditModal", data-name="#{webpage.name}", data-url="#{webpage.url}", data-id="#{webpage._id}", style="margin:0px 2px")
                                 span.glyphicon.glyphicon-pencil
                                 | Edit
-                            button.btn.btn-success.btn-xs(type="button", data-toggle="modal", data-target="#webpageSnipetModal", data-name="#{webpage.name}", data-url="#{webpage.url}", data-id="#{webpage._id}", style="margin:0px 2px")
+                            button.btn.btn-primary.btn-xs(type="button", data-toggle="modal", data-target="#webpageSnipetModal", data-name="#{webpage.name}", data-url="#{webpage.url}", data-id="#{webpage._id}", style="margin:0px 2px")
                                 | Get Snippet
 
         else
@@ -148,6 +152,8 @@ block content
         })
 
         $("#delete-page").click(function () {
+
+            alert("QWE");
             var page_id = $(this).data('id');
             $.ajax({
                 url: '/page',

@@ -43,8 +43,12 @@ body {
     width: 30px;
 }
 
+.table-striped>tbody>tr:nth-child(odd){
+    background-color:beige;
+}
+
 #content {
-    width: 1050px;
+    width: 70%;
     margin: 0px auto;
     /*border: 1px solid #e7e7e7;*/
     border-top: none;
@@ -59,7 +63,7 @@ body {
 
 #content #data {
     margin: 0px auto 0px 20px;
-    width: 75%;
+    width: 100%;
     float: right;
 }
 

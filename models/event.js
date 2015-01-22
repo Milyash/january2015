@@ -4,11 +4,12 @@ var Webpage = require
 var Schema = mongoose.Schema;
 
 var EventSchema = new Schema({
-  video_url: String,
-  video_id: String,
-  time : Number
-}, { collection : 'events', discriminatorKey : '_type' });
+    time: Number,
+    //watch: {type: Schema.ObjectId, ref: "Watch", childPath: "events"}
+    video: {type: Schema.ObjectId, ref: "Video", childPath: "events"}
+}, {collection: 'events', discriminatorKey: '_type'});
+
+
 
 mongoose.model('Event', EventSchema);
-
 module.exports = EventSchema;

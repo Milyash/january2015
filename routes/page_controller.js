@@ -14,7 +14,7 @@ router
                 if (err)
                     res.send(err);
                 console.log(webpages);
-                res.render('page', {"webpages": webpages});
+                res.render('page', {webpages: webpages});
             })
     })
     .post('/', function (req, res) {

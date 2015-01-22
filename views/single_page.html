@@ -1,0 +1,56 @@
+<!DOCTYPE html><html><head lang="en"><meta charset="UTF-8"><title></title><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"><link rel="stylesheet" href="/stylesheets/user.css"><script src="//code.jquery.com/jquery-1.11.0.min.js"></script><script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script></head><body style="background-repeat: no-repeat;  background-image:  url(/images/blured_background_1.jpg);      background-size: cover;"><nav role="navigation" style="width:100%; margin: 0px auto; border-radius: 0;  padding:0px 160px" class="navbar navbar-inverse"><div class="container-fluid"><div class="navbar-header"><button type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="#" style="text-align: center" class="navbar-brand"><img src="/images/logo-color.png" style="max-width:50px; margin-top: -7px; display: block "></a></div><div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse"><ul class="nav navbar-nav"><li><a href="#" style="margin-right:80px" class="navbar-brand">WeNeedName</a></li><li class="active"><a href="/page">Web pages<span class="sr-only">(current)</span></a></li><li><a href="/video">Videos<span class="sr-only">(current)</span></a></li><li><a href="/statistics">Statistics</a></li></ul><ul class="nav navbar-nav navbar-right"><li class="dropdown"><a id="user" href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="dropdown-toggle"><spaan class="glyphicon glyphicon-user"></spaan> User<span class="caret"></span></a><ul role="menu" class="navbar-inverse dropdown-menu"><li><a href="#" class="a-menu_dropdown"><span class="glyphicon glyphicon-arrow-left"></span> Logout</a></li></ul></li></ul></div></div></nav><div id="content"><!--div#menu.navbar.navbar-inverse.clearfix(style="margin-right: 10px;")ul.nav.nav-stacked
+    li.active(role="presentation")
+        a.a-black(href="#") Web pages
+    li(role="presentation")
+        a.a-black(href="#") Videos
+    li(role="presentation")
+        a.a-black(href="#") Statistics--><!--div.inner_content--><div id="data"><h4>This page doesn't exist!</h4><a href="/page" class="btn btn-danger"><span class="glyphicon glyphicon-arrow-left"></span>Return</a></div><div id="webpageEditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" data-dismiss="modal" class="close"><span aria-hidden="true">&#215;</span><span class="sr-only">Close</span></button><h4 id="webpageEditModalLabel" class="modal-title">Edit web page info</h4></div><div class="modal-body"><form id="edit-modal-form" role="form" method="post" action="/page"><div class="form-group"><label for="webpage_edit_name" class="control-label">Name:</label><input id="webpage_edit_name" type="text" name="name" class="form-control"></div><div class="form-group"><label for="webpage_edit_url" class="control-label">URL:</label><input id="webpage_edit_url" type="text" name="url" class="form-control"></div><div class="modal-footer"><input id="webpage_edit_id" type="hidden" name="page_edit_id"><button type="button" data-dismiss="modal" class="btn btn-default">Close</button><button id="edit-modal-save" type="button" class="btn btn-primary">Save</button></div></form></div></div></div></div><div id="webpageSnipetModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" data-dismiss="modal" class="close"><span aria-hidden="true">&#215;</span><span class="sr-only">Close</span></button><h4 class="modal-title">Edit web page info</h4></div><div class="modal-body"></div><div class="modal-footer"><button type="button" data-dismiss="modal" class="btn btn-default">Close</button></div></div></div></div><script>$('#webpageEditModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var webpageName = button.data('name');
+    var webpageUrl = button.data('url');
+    var webpageId = button.data('id');
+
+    var modal = $(this);
+    modal.find('.modal-title').text('Edit web page ' + webpageName);
+    modal.find('.modal-body input#webpage_edit_name').val(webpageName);
+    modal.find('.modal-body input#webpage_edit_url').val(webpageUrl);
+    modal.find('.modal-body input#webpage_edit_id').val(webpageId);
+
+})
+
+$('#webpageSnipetModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var modal = $(this);
+    var webpageName = button.data('name');
+    var webpageUrl = button.data('url');
+    var webpageId = button.data('id');
+
+    modal.find('.modal-title').text('Snipet for ' + webpageName + ' on ' + webpageUrl);
+
+    $.get('/page/snipet/' + webpageId)
+            .done(function (data) {
+                modal.find('.modal-body').text(data.snipet);
+            });
+})
+
+$('#edit-modal-save').click(function () {
+    var $form = $('#edit-modal-form');
+    $.post($form.attr('action'), $form.serialize())
+            .done(function () {
+                //$("#webpageEditModal").modal('hide');
+                location.reload();
+            })
+})
+
+$("#delete-page").click(function () {
+    var page_id = $(this).data('id');
+    $.ajax({
+        url: '/page',
+        type: 'DELETE',
+        data: {'page_id': page_id}
+    })
+            .done(function () {
+                alert("The page deleted!");
+                location.reload();
+            });
+})</script><div class="clearfix"></div></div></body></html>
