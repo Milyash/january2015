@@ -7,8 +7,8 @@ html
     link(rel="stylesheet", href="/stylesheets/user.css")
     script(src="//code.jquery.com/jquery-1.11.0.min.js")
     script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js")
-  body
-    nav.navbar.navbar-default(role="navigation", style="width:1100px; margin: 0px auto; background-color: antiquewhite; ")
+  body(style="background-repeat: no-repeat;  background-image:  url(/images/blured_background_1.jpg);      background-size: cover;")
+    nav.navbar.navbar-inverse(role="navigation", style="width:100%; margin: 0px auto; border-radius: 0;  padding:0px 160px")
       .container-fluid
         .navbar-header
           button.navbar-toggle.collapsed(type="button",data-toggle="collapse", data-target="#bs-example-navbar-collapse-1")
@@ -16,12 +16,14 @@ html
             span.icon-bar
             span.icon-bar
             span.icon-bar
-          //a.navbar-brand(href="#", style="text-align: center")
-            img(src="/images/logo.png", style="height: 20px; margin: 0px;display: block ")
+          a.navbar-brand(href="#", style="text-align: center")
+            img(src="/images/logo-color.png", style="max-width:50px; margin-top: -7px; display: block ")
         #bs-example-navbar-collapse-1.collapse.navbar-collapse
           ul.nav.navbar-nav
+            li
+              a.navbar-brand(href="#", style="margin-right:80px") WeNeedName
             li.active
-              a(href="#") Link
+              a(href="#") Home
                 span.sr-only (current)
             li
               a(href="#") Link
@@ -31,21 +33,23 @@ html
           ul.nav.navbar-nav.navbar-right
             li.dropdown
               a#user.dropdown-toggle(href="#", data-toggle="dropdown", role="button", aria-expanded="false")
-                img(src="/images/userpic.gif")
-                | User
+                spaan.glyphicon.glyphicon-user
+                |  User
                 span.caret
-              ul.dropdown-menu(role="menu")
+              ul.navbar-inverse.dropdown-menu(role="menu")
                 li
-                  a(href="#")
+                  a.a-menu_dropdown(href="#")
                     span.glyphicon.glyphicon-arrow-left
-                    | Logout
+                    |  Logout
     #content
-      ul#menu.nav.nav-pills.nav-stacked
-        li.active(role="presentation")
-          a(href="#") Web pages
-        li(role="presentation")
-          a(href="#") Videos
-        li(role="presentation")
-          a(href="#") Statistics
+      div#menu.navbar.navbar-inverse.clearfix(style="margin-right: 10px;")
+        ul.nav.nav-stacked
+            li.active(role="presentation")
+                a.a-black(href="#") Web pages
+            li(role="presentation")
+                a.a-black(href="#") Videos
+            li(role="presentation")
+                a.a-black(href="#") Statistics
+      //div.inner_content
       block content
       .clearfix

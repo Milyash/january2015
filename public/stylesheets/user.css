@@ -1,72 +1,105 @@
-body{
-    font-family: Verdana, Arial, sans-serif ;
-    padding:0px
+body {
+    font-family: Verdana, Arial, sans-serif;
+    padding: 0px
 }
-.header-block{
+
+.header-block {
     width: 100%;
-    background-color:#2289ae;
+    background-color: #2289ae;
     color: white;
     margin: 0px auto;
     padding: 10px 0px;
 }
 
-.header{
+.header {
     width: 900px;
     height: 100px;
     margin: 10px auto;
 }
 
-.header a#logo{
+.header a#logo {
     width: 100px;
     text-align: center;
     color: white;
     display: block;
     font: 15px bold;
-    font-family: Verdana, Arial, sans-serif ;
+    font-family: Verdana, Arial, sans-serif;
     float: left;
 }
 
-.header #logo img{
+.header #logo img {
     width: 100px;
 }
 
-#user{
+#user {
     width: 150px;
     text-align: center;
     display: block;
     font: 12px bold;
-    font-family: Verdana, Arial, sans-serif ;
+    font-family: Verdana, Arial, sans-serif;
 }
 
-#user img{
+#user img {
     width: 30px;
 }
 
-#content{
-    width: 1000px;
+#content {
+    width: 1050px;
     margin: 0px auto;
-    border: 1px solid #e7e7e7;
+    /*border: 1px solid #e7e7e7;*/
     border-top: none;
     min-height: 100px;
     padding: 20px;
 }
 
-#content #menu{
+#content #menu {
     width: 20%;
     float: left;
 }
 
-#content #data{
+#content #data {
     margin: 0px auto 0px 20px;
     width: 75%;
     float: right;
 }
 
-.snippet-text{
+.snippet-text {
     margin: 20px 0px;
     font-size: 10px;
 }
 
-.webpage-form{
+.webpage-form {
     margin: 20px 0px;
+}
+
+.a-black:hover,
+.a-black:focus {
+    color: #fff;
+    background-color: transparent !important;
+    outline: none;
+}
+
+.a-black:focus {
+    background-color: #000000 !important;
+}
+
+.inner_content {
+    display: inline-block
+}
+
+.inner_content a {
+    color: #23527c;
+}
+
+.inner_content a:hover, a:focus {
+    color: #C6C5C5;
+}
+.a-menu_dropdown{
+    color:#9d9d9d !important;
+}
+.a-menu_dropdown:focus,
+.a-menu_dropdown:hover{
+    color: #fff  !important;;
+    background-color: transparent !important;
+    outline: none;
 }
