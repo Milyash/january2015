@@ -5,6 +5,7 @@ html
     title
     link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css")
     link(rel="stylesheet", href="/stylesheets/user.css")
+    link(rel="stylesheet", href="/stylesheets/table.css")
     script(src="//code.jquery.com/jquery-1.11.0.min.js")
     script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js")
   body(style="background-repeat: no-repeat;  background-image:  url(/images/blured_background_1.jpg);      background-size: cover;")
@@ -25,12 +26,17 @@ html
             li.active
               a(href="/page") Web pages
                 span.sr-only (current)
-            li
-              a(href="/video") Videos
-                span.sr-only (current)
-            li
-              a(href="/statistics") Statistics
-          ul.nav.navbar-nav.navbar-right
+            //li
+            //  a(href="/video") Videos
+            //    span.sr-only (current)
+            //li
+            //  a(href="/statistics") Statistics
+            li(role="presentation")
+                a.a-black.active(href="#videos", aria-controls="videos", role="tab", data-toggle="tab") Videos
+            li(role="presentation")
+                a.a-black(href="#statistics", aria-controls="statistics", role="tab", data-toggle="tab") Statistics
+
+            ul.nav.navbar-nav.navbar-right
             li.dropdown
               a#user.dropdown-toggle(href="#", data-toggle="dropdown", role="button", aria-expanded="false")
                 spaan.glyphicon.glyphicon-user
