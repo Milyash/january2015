@@ -2,39 +2,42 @@ extends layout
 
 block content
     #data
-        h4 Registered web pages to track
-        button.btn.btn-success.pull-right(type="button", data-toggle="modal", data-target="#webpageCreateModal", style="margin:0px 2px")
-            | New Page +
+
         .clearfix
+
         if webpages.length > 0
-            table.table.table-striped
-                thead
-                    tr
-                        th #
-                        th Name
-                        th Url
-                        th
-                tbody
-                each webpage, i in webpages
-                    tr
-                        td #{i + 1}.
-                        td
-                            a(href="/page/#{webpage._id}") #{webpage.name}
-                        td
-                            a(href="#{webpage.url}")
-                                if(webpage.url.length > 50)
-                                    | #{webpage.url.substr(1, 50) + '...'}
-                                else
-                                    | #{webpage.url}
-                        td(style="min-width: 250px")
-                            button#delete-page.btn.btn-danger.btn-xs(type="button", data-id="#{webpage._id}", style="margin:0px 2px")
-                                span.glyphicon.glyphicon-remove
-                                | Delete
-                            button.btn.btn-warning.btn-xs(type="button", data-toggle="modal", data-target="#webpageEditModal", data-name="#{webpage.name}", data-url="#{webpage.url}", data-id="#{webpage._id}", style="margin:0px 2px")
-                                span.glyphicon.glyphicon-pencil
-                                | Edit
-                            button.btn.btn-primary.btn-xs(type="button", data-toggle="modal", data-target="#webpageSnipetModal", data-name="#{webpage.name}", data-url="#{webpage.url}", data-id="#{webpage._id}", style="margin:0px 2px")
-                                | Get Snippet
+            div.div-simple-little-table
+                span(style="display:inline") Registered web pages to track
+                table.simple-little-table
+                    thead
+                        tr
+                            th #
+                            th Name
+                            th.topright Url
+                            th.invisible-simple-little-table
+                    tbody
+                    each webpage, i in webpages
+                        tr
+                            td #{i + 1}.
+                            td
+                                a(href="/page/#{webpage._id}") #{webpage.name}
+                            td.bottomright
+                                a(href="#{webpage.url}")
+                                    if(webpage.url.length > 50)
+                                        | #{webpage.url.substr(1, 50) + '...'}
+                                    else
+                                        | #{webpage.url}
+                            td.invisible-simple-little-table(style="width: 210px")
+                                button#delete-page.btn.btn-danger.btn-xs(type="button", data-id="#{webpage._id}", style="margin:0px 2px")
+                                    span.glyphicon.glyphicon-remove
+                                    | Delete
+                                button.btn.btn-warning.btn-xs(type="button", data-toggle="modal", data-target="#webpageEditModal", data-name="#{webpage.name}", data-url="#{webpage.url}", data-id="#{webpage._id}", style="margin:0px 2px")
+                                    span.glyphicon.glyphicon-pencil
+                                    | Edit
+                                button.btn.btn-primary.btn-xs(type="button", data-toggle="modal", data-target="#webpageSnipetModal", data-name="#{webpage.name}", data-url="#{webpage.url}", data-id="#{webpage._id}", style="margin:0px 2px")
+                                    | Get Snippet
+                button.btn.btn-success(type="button", data-toggle="modal", data-target="#webpageCreateModal", style="margin-top:20px; ")
+                    | New Page +
 
         else
             p There are no web pages registered for tracking!
