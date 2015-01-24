@@ -40,11 +40,11 @@ html
             li.dropdown
               a#user.dropdown-toggle(href="#", data-toggle="dropdown", role="button", aria-expanded="false")
                 spaan.glyphicon.glyphicon-user
-                |  User
+                |  #{req.session.user? req.session.user.username : 'User'}
                 span.caret
               ul.navbar-inverse.dropdown-menu(role="menu")
                 li
-                  a.a-menu_dropdown(href="#")
+                  a.a-menu_dropdown(href="/users/logout")
                     span.glyphicon.glyphicon-arrow-left
                     |  Logout
     #content

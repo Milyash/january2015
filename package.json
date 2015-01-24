@@ -18,6 +18,7 @@
     "fs": "*",
     "node-uuid": "*",
     "mongoose-relationship": "*",
-    "nodemailer": "*"
+    "nodemailer": "*",
+    "express-session": "*"
   }
 }

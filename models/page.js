@@ -23,7 +23,7 @@ WebpageSchema.path('url').validate(function (value) {
 }, 'Invalid url');
 
 WebpageSchema.path('url').validate(function(value, done) {
-    if (this.isNew || this.isModified('email')) {
+    if (this.isNew || this.isModified('url')) {
         this.model('Page').count({ url: value }, function(err, count) {
             done(!err && !count);
         });
