@@ -28,7 +28,7 @@ block content
                                     else
                                         | #{webpage.url}
                             td.invisible-simple-little-table(style="width: 210px")
-                                button#delete-page.btn.btn-danger.btn-xs(type="button", data-id="#{webpage._id}", style="margin:0px 2px")
+                                button.delete-page.btn.btn-danger.btn-xs(type="button", data-id="#{webpage._id}", style="margin:0px 2px")
                                     span.glyphicon.glyphicon-remove
                                     | Delete
                                 button.btn.btn-warning.btn-xs(type="button", data-toggle="modal", data-target="#webpageEditModal", data-name="#{webpage.name}", data-url="#{webpage.url}", data-id="#{webpage._id}", style="margin:0px 2px")
@@ -36,11 +36,13 @@ block content
                                     | Edit
                                 button.btn.btn-primary.btn-xs(type="button", data-toggle="modal", data-target="#webpageSnipetModal", data-name="#{webpage.name}", data-url="#{webpage.url}", data-id="#{webpage._id}", style="margin:0px 2px")
                                     | Get Snippet
-                button.btn.btn-success(type="button", data-toggle="modal", data-target="#webpageCreateModal", style="margin-top:20px; ")
-                    | New Page +
+
 
         else
             p There are no web pages registered for tracking!
+
+        button.btn.btn-success(type="button", data-toggle="modal", data-target="#webpageCreateModal", style="margin-top:20px; ")
+            | New Page +
 
     #webpageCreateModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="exampleModalLabel", aria-hidden="true")
         .modal-dialog
@@ -107,7 +109,8 @@ block content
             modal.find('.modal-body input#webpage_edit_url').val(webpageUrl);
             modal.find('.modal-body input#webpage_edit_id').val(webpageId);
 
-        })
+        });
+
 
         $('#webpageSnipetModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget);
@@ -122,13 +125,57 @@ block content
                     .done(function (data) {
                         modal.find('.modal-body textarea').text(data.snipet);
                     });
-        })
+        });
 
-        var formValidation = function(data, $form) {
+        $('#edit-modal-save').click(function () {
+            var $form = $('#edit-modal-form');
+            $.post($form.attr('action'), $form.serialize())
+                    .done(function (data) {
+                        formValidation(data, $form)
+                    })
+        });
+
+        $("#create-modal-save").click(function () {
+            var $form = $('#create-modal-form');
+            $.ajax({
+                url: '/page',
+                type: 'PUT',
+                data: $form.serialize()
+            })
+                    .done(function (data) {
+                        formValidation(data, $form)
+                    });
+        });
+
+        $(".delete-page").on("click", function () {
+            console.log("LOGLOGLOG");
+            var page_id = $(this).data('id');
+            $.ajax({
+                url: '/page',
+                type: 'DELETE',
+                data: {'page_id': page_id}
+            })
+                    .done(function () {
+                        alert("The page deleted!");
+                        location.reload();
+                    });
+        });
+
+        $("#snippet-copy").focus(function () {
+            $(this).select();
+            $("#webpageSnipetModal").find('.modal-body')
+                    .append('<div class="alert alert-success" id="copy-msg" role="alert">To copy the snippet press Ctrl+C and insert it to your webpage</div>');
+        });
+
+        $("#snippet-copy").focusout(function () {
+            if ($("#webpageSnipetModal").find('.modal-body #copy-msg').length > 0)
+                $(".modal-body #copy-msg").remove();
+        });
+
+        var formValidation = function (data, $form) {
             $form.find(".has-error").removeClass("has-error")
-            if(data.errors) {
-                for(var key in data.errors)
-                {
+            if (data.errors) {
+                for (var key in data.errors) {
                     var path = data.errors[key].path;
                     $formGroup = $form.find('[name="' + path + '"]').parents('.form-group')
                     $helpBlock = $formGroup.find('.help-block').length ? $formGroup.find('.help-block') :
@@ -140,43 +187,3 @@ block content
                 location.reload()
             }
         }
-
-        $('#edit-modal-save').click(function () {
-            var $form = $('#edit-modal-form');
-            $.post($form.attr('action'), $form.serialize())
-                    .done(function(data) { formValidation(data, $form) })
-        })
-
-        $("#create-modal-save").click(function () {
-            var $form = $('#create-modal-form');
-            $.ajax({
-                url: '/page',
-                type: 'PUT',
-                data: $form.serialize()
-            })
-                    .done(function(data) { formValidation(data, $form) });
-        })
-
-        $("#delete-page").click(function () {
-            alert("QWE");
-            var page_id = $(this).data('id');
-            $.ajax({
-                url: '/page',
-                type: 'DELETE',
-                data: {'page_id': page_id}
-            })
-                    .done(function () {
-                        alert("The page deleted!");
-                        location.reload();
-                    });
-        })
-
-        $("#snippet-copy").focus(function(){
-            $(this).select();
-            $("#webpageSnipetModal").find('.modal-body').append('<div class="alert alert-success" id="copy-msg" role="alert">To copy the snippet press Ctrl+C and insert it to your webpage</div>');
-        })
-
-        $("#snippet-copy").focusout(function(){
-            if($("#webpageSnipetModal").find('.modal-body #copy-msg').length >0)
-                $(".modal-body #copy-msg").remove();
-        })
