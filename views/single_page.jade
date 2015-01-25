@@ -59,24 +59,28 @@ block content
                                     td
                                         img(src="/images/video_preview.png", style="width:150px")
 
+
                     //else
                         p There are no web pages registered for tracking!
 
-                .tab-pane.fade#statistics(role="tabpanel", style="margin: 20px;")
-                    ul.nav.nav-tabs(role="tablist")
-                        li.active(role="presentation")
-                            a(href="#stat1", aria-controls="stat1", role="tab", data-toggle="tab") Statistics 1
-                        li(role="presentation")
-                            a(href="#stat2", aria-controls="stat2", role="tab", data-toggle="tab") Statistics 2
+                .tab-pane.fade#statistics(role="tabpanel")
+                    script(src="/scripts/statistics_drawer.js")
+                    div#volumeDiagram(style="width: 600px; height: 400px;")
 
-                    .tab-content
-                        .tab-pane.fade.in.active#stat1(role="tabpanel", style="margin: 10px;")
-                            h5 Registered web pages to track
-                            img(src="/images/g1.png", style="width:600px; margin: 10px auto")
-
-                        .tab-pane.fade#stat2(role="tabpanel", style="margin: 10px; margin: 10px auto")
-                            h5 Registered web pages to track 2
-                            img(src="/images/g2.png", style="width:600px")
+                    //ul.nav.nav-tabs(role="tablist")
+                    //    li.active(role="presentation")
+                    //        a(href="#stat1", aria-controls="stat1", role="tab", data-toggle="tab") Statistics 1
+                    //    li(role="presentation")
+                    //        a(href="#stat2", aria-controls="stat2", role="tab", data-toggle="tab") Statistics 2
+                    //
+                    //.tab-content
+                    //    .tab-pane.fade.in.active#stat1(role="tabpanel", style="margin: 10px;")
+                    //        h5 Registered web pages to track
+                    //        img(src="/images/g1.png", style="width:600px; margin: 10px auto")
+                    //
+                    //    .tab-pane.fade#stat2(role="tabpanel", style="margin: 10px; margin: 10px auto")
+                    //        h5 Registered web pages to track 2
+                    //        img(src="/images/g2.png", style="width:600px")
 
 
         else
@@ -86,6 +90,7 @@ block content
                 | Return
         a.btn.btn-primary(style="margin:20px 0px 20px 2px", href="#{page.url}")
             | Go to the site
+
     #webpageEditModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="exampleModalLabel", aria-hidden="true")
         .modal-dialog
             .modal-content
@@ -118,6 +123,7 @@ block content
                 .modal-body
                 .modal-footer
                     button.btn.btn-default(type="button", data-dismiss="modal") Close
+    script(src="/scripts/statistics_drawer.js")
     script.
         $('#webpageEditModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget);

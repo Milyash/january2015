@@ -6,6 +6,8 @@ html
     link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css")
     link(rel="stylesheet", href="/stylesheets/user.css")
     link(rel="stylesheet", href="/stylesheets/table.css")
+    //script(src="/scripts/statistics_drawer.js")
+    script(src="https://www.google.com/jsapi")
     script(src="//code.jquery.com/jquery-1.11.0.min.js")
     script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js")
   body(style="background-repeat: no-repeat;  background-image:  url(/images/blured_background_1.jpg);      background-size: cover;")
@@ -40,7 +42,8 @@ html
             li.dropdown
               a#user.dropdown-toggle(href="#", data-toggle="dropdown", role="button", aria-expanded="false")
                 spaan.glyphicon.glyphicon-user
-                |  #{req.session.user? req.session.user.username : 'User'}
+                  | User-Huuser
+                //|  #{req.session.user? req.session.user.username : 'User'}
                 span.caret
               ul.navbar-inverse.dropdown-menu(role="menu")
                 li
