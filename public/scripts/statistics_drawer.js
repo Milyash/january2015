@@ -8,6 +8,10 @@ google.load('visualization', '1', {packages: ['corechart']});
     var volumeDataArray = [
         ['ID', 'Time', 'Quantity of Watchers', 'Type', 'Difference'],
     ];
+    var viewsDataArray = [
+        ['Time', 'Views']
+    ];
+    var viewsDataObject = {};
     var volumeUps = [];
     var volumeDowns = [];
     var vAxisMax = 2;
@@ -79,6 +83,42 @@ google.load('visualization', '1', {packages: ['corechart']});
 }
 //for test
 {
+    playStatisticsData = [
+        {"_id": "54976e2d1b13111c2afa7f45", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 0, "video_id": "player2", "__v": 0},
+        {"_id": "54b30f811b13111c2afa8354", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 0, "video_id": "player2", "__v": 0},
+        {"_id": "54b30f851b13111c2afa8357", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 0.073, "video_id": "player2", "__v": 0},
+        {"_id": "54b30f8c1b13111c2afa835b", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "video_id": "player2", "__v": 0},
+        {"_id": "54b30f8f1b13111c2afa835e", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "video_id": "player2", "__v": 0},
+        {"_id": "54b30f931b13111c2afa8361", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 16.32, "video_id": "player2", "__v": 0},
+        {"_id": "54b30f931b13111c2afa8363", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 16.481, "video_id": "player2", "__v": 0},
+        {"_id": "54b30f9b1b13111c2afa8365", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 19.04, "video_id": "player2", "__v": 0},
+        {"_id": "54bda25e29510cbc022b4d21", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 0, "video_id": "player2", "__v": 0},
+        {"_id": "54bda32d29510cbc022b4d2a", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 0, "video_id": "player2", "__v": 0},
+        {"_id": "54c4815629510cbc022b5696", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 0, "video_id": "player2", "__v": 0},
+        {"_id": "54c4816029510cbc022b569c", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 8.44, "video_id": "player2", "__v": 0},
+        {"_id": "54c4816429510cbc022b569f", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 91.232, "video_id": "player2", "__v": 0},
+        {"_id": "54c4816829510cbc022b56a1", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 92.8, "video_id": "player2", "__v": 0}
+    ];
+    pauseStatisticsData = [
+        {"_id": "54976e351b13111c2afa7f4b", "_type": "Pause", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 7.12, "video_id": "player2", "__v": 0},
+        {"_id": "54b30f851b13111c2afa8356", "_type": "Pause", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 0.073, "video_id": "player2", "__v": 0},
+        {"_id": "54b30f8c1b13111c2afa835a", "_type": "Pause", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "video_id": "player2", "__v": 0},
+        {"_id": "54b30f8f1b13111c2afa835d", "_type": "Pause", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "video_id": "player2", "__v": 0},
+        {"_id": "54b30f931b13111c2afa8360", "_type": "Pause", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 16.083, "video_id": "player2", "__v": 0},
+        {"_id": "54b30f931b13111c2afa8362", "_type": "Pause", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 16.32, "video_id": "player2", "__v": 0},
+        {"_id": "54b30f961b13111c2afa8364", "_type": "Pause", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 18.84, "video_id": "player2", "__v": 0},
+        {"_id": "54bda32a29510cbc022b4d28", "_type": "Pause", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 203.84, "video_id": "player2", "__v": 0},
+        {"_id": "54bda33829510cbc022b4d2e", "_type": "Pause", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 10.6, "video_id": "player2", "__v": 0},
+        {"_id": "54c4816029510cbc022b569b", "_type": "Pause", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 8.44, "video_id": "player2", "__v": 0},
+        {"_id": "54c4816129510cbc022b569d", "_type": "Pause", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 47.88, "video_id": "player2", "__v": 0},
+        {"_id": "54c4816529510cbc022b56a0", "_type": "Pause", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 92.64, "video_id": "player2", "__v": 0},
+        {"_id": "54c4816929510cbc022b56a3", "_type": "Pause", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 93.8, "video_id": "player2", "__v": 0}
+    ];
+    seekStatisticsData = [
+        {"_id": "54bda32c29510cbc022b4d29", "_type": "Seek", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time_from": 0, "time_to": 3.44, "video_id": "player2", "__v": 0},
+        {"_id": "54c4816029510cbc022b569a", "_type": "Seek", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time_from": 4.55, "time_to": 46.66, "video_id": "player2", "__v": 0},
+        {"_id": "54c4816229510cbc022b569e", "_type": "Seek", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time_from": 55.04, "time_to": 48.55, "video_id": "player2", "__v": 0}
+    ];
     volumeStatisticsData = [
         {
             "_id": "54976d801b13111c2afa7f34",
@@ -169,9 +209,90 @@ google.load('visualization', '1', {packages: ['corechart']});
         }
     ];
 }
+//views diagram
+{
+    function formViewsDataForDiagram() {
+        viewsDataArray = [
+            ['Time', 'Views']
+        ];
+        viewsDataObject = {};
+        for (var i = 0; i < playStatisticsData.length; i++) {
+            var data = playStatisticsData[i];
+            if (data.time != undefined) {
+                data.time = data.time.toFixed(0);
+                if (viewsDataObject.hasOwnProperty(data.time)) {
+                    viewsDataObject[data.time]++;
+                } else {
+                    viewsDataObject[data.time] = 1;
+                }
+            }
+        }
+        for (var i = 0; i < pauseStatisticsData.length; i++) {
+            var data = pauseStatisticsData[i];
+            if (data.time != undefined) {
+                data.time = data.time.toFixed(0);
+                if (viewsDataObject.hasOwnProperty(data.time)) {
+                    viewsDataObject[data.time]--;
+                } else {
+                    viewsDataObject[data.time] = -1;
+                }
+            }
+        }
+        ;
+        for (var i = 0; i < seekStatisticsData.length; i++) {
+            var data = seekStatisticsData[i];
+            data.time_to = data.time_to.toFixed(0);
+            data.time_from = data.time_from.toFixed(0);
+            if ((data.time_to != undefined) && (data.time_from)) {
+                if (data.time_to > data.time_from) {
+                    if (viewsDataObject.hasOwnProperty(data.time_to)) {
+                        viewsDataObject[data.time_to]++;
+                    } else {
+                        viewsDataObject[data.time_to] = 1;
+                    }
+                    if (viewsDataObject.hasOwnProperty(data.time_from)) {
+                        viewsDataObject[data.time_from]--;
+                    } else {
+                        viewsDataObject[data.time_from] = -1;
+                    }
+                } else {
+                    if (viewsDataObject.hasOwnProperty(data.time_to)) {
+                        viewsDataObject[data.time_to]--;
+                    } else {
+                        viewsDataObject[data.time_to] = -1;
+                    }
+                    if (viewsDataObject.hasOwnProperty(data.time_from)) {
+                        viewsDataObject[data.time_from]++;
+                    } else {
+                        viewsDataObject[data.time_from] = 1;
+                    }
+                }
+            }
+        }
+        var quantity = 0;
+        for (var time in viewsDataObject) {
+            var data = viewsDataObject[time];
+            quantity = quantity + data;
+            viewsDataArray.push([parseInt(time), quantity]);
+        }
+    };
+    var viewsOptions = {
+        title: 'Views',
+        backgroundColor: "transparent",
+        width: 600,
+        height: 400,
+        hAxis: {title: 'Time'},
+        vAxis: {title: 'Views'}
+    };
+    formViewsDataForDiagram();
+    var chart2 = new google.visualization.AreaChart(document.getElementById('viewsDiagram'));
+    var viewsData = google.visualization.arrayToDataTable(viewsDataArray);
+    chart2.draw(viewsData, viewsOptions);
+
+}
 //volume diagram
 {
-    var getMaximumWatchersQuantity = function (volumeDataArray) {
+    var getMaximumVolumeChangers = function (volumeDataArray) {
         var maxQuantity = 0;
         for (var time in volumeDataArray) {
             var volumeUp = volumeDataArray[time];
@@ -184,9 +305,12 @@ google.load('visualization', '1', {packages: ['corechart']});
 
 
     function formVolumeDataForDiagram() {
-        for(var i=0; i< volumeStatisticsData.length;i++) {
+        volumeDataArray = [
+            ['ID', 'Time', 'Quantity of Watchers', 'Type', 'Difference']
+        ];
+        for (var i = 0; i < volumeStatisticsData.length; i++) {
             var data = volumeStatisticsData[i];
-            if (data.time != undefined)  {
+            if (data.time != undefined) {
                 data.time = data.time.toFixed(0);
                 if (data.from_volume > data.to_volume) {
                     if (volumeDowns.hasOwnProperty(data.time)) {
@@ -216,8 +340,8 @@ google.load('visualization', '1', {packages: ['corechart']});
                 parseInt(100 * (volumeDown.sum_of_differences / volumeDown.quantity_of_watchers).toFixed(2))]);
         }
 
-        vAxisMax = getMaximumWatchersQuantity(volumeUps) + 1;
-        vAxisMin = getMaximumWatchersQuantity(volumeDowns) + 1;
+        vAxisMax = getMaximumVolumeChangers(volumeUps) + 1;
+        vAxisMin = getMaximumVolumeChangers(volumeDowns) + 1;
 
 //        volumeDataArray = volumeDataArrays[$scope.currentVideo];
 
@@ -226,7 +350,7 @@ google.load('visualization', '1', {packages: ['corechart']});
 
     var volumeDiagramOptions = {
         width: 600,
-        height:400,
+        height: 400,
         animation: {
             duration: 700
         },
@@ -248,8 +372,13 @@ google.load('visualization', '1', {packages: ['corechart']});
         chart.draw(volumeData, volumeDiagramOptions);
     }
 
-//    refreshVolumeDiagram();
-    //it is called for a second time to fire animation
-    refreshVolumeDiagram();
 
+    function refreshDiagrams() {
+        var path = window.location.pathname;
+        var splittedPath = path.split("/");
+        var videoId = splittedPath[splittedPath.length - 1];
+        refreshVolumeDiagram();
+    }
+
+    refreshDiagrams();
 }

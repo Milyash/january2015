@@ -65,7 +65,9 @@ block content
 
                 .tab-pane.fade#statistics(role="tabpanel")
                     script(src="/scripts/statistics_drawer.js")
-                    div#volumeDiagram(style="width: 600px; height: 400px;")
+
+                    div#volumeDiagram(style="width: 600px; height: 400px;display:inline-block;")
+                    div#viewsDiagram(style="width: 600px; height: 400px;display:inline-block;")
 
                     //ul.nav.nav-tabs(role="tablist")
                     //    li.active(role="presentation")
@@ -124,6 +126,7 @@ block content
                 .modal-footer
                     button.btn.btn-default(type="button", data-dismiss="modal") Close
     script(src="/scripts/statistics_drawer.js")
+
     script.
         $('#webpageEditModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget);
