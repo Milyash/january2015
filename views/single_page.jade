@@ -1,30 +1,23 @@
 extends layout
 
 block content
-    //#data
-    //div#menu.navbar.navbar-inverse.clearfix(style="margin-right: 10px;")
-    //    ul.nav.nav-stacked
-    //        li(role="presentation")
-    //            //a.a-black(href="#") Videos
-    //            a.a-black.active(href="#videos", aria-controls="videos", role="tab", data-toggle="tab") Videos
-    //        li(role="presentation")
-    //            //a.a-black(href="#") Statistics
-    //            a.a-black(href="#statistics", aria-controls="statistics", role="tab", data-toggle="tab") Statistics
+    ol.breadcrumb(style="background-color:#252525")
+        li
+            a(href='/page') All pages
+        if page
+            li.active #{page.name}
+
     #data
         if page
-            table(width='100%' style="margin-bottom: 20px")
-                tr
-                    td
-                        h4 Page #{page.name}
-                    td(style="text-align:right")
-                        button#delete-page.btn.btn-danger.btn-xs.pull-right(type="button", data-id="#{page._id}", style="margin:0px 2px")
-                            span.glyphicon.glyphicon-remove
-                            | Delete
-                        button.btn.btn-warning.btn-xs.pull-right(type="button", data-toggle="modal", data-target="#webpageEditModal", data-name="#{page.name}", data-url="#{page.url}", data-id="#{page._id}", style="margin:0px 2px")
-                            span.glyphicon.glyphicon-pencil
-                            | Edit
-                        button.btn.btn-xs.btn-primary.pull-right(type="button", data-toggle="modal", data-target="#webpageSnipetModal", data-name="#{page.name}", data-url="#{page.url}", data-id="#{page._id}", style="margin:0px 2px")
-                            | Get Snippet
+            h4.pull-left(style="margin-bottom: 20px; color:white; text-shadow: 1px 2px 0 #000000; width:70%") Page #{page.name}
+            button#delete-page.btn.btn-danger.btn-xs.pull-right(type="button", data-id="#{page._id}", style="margin:0px 2px")
+                span.glyphicon.glyphicon-remove
+                | Delete
+            button.btn.btn-warning.btn-xs.pull-right(type="button", data-toggle="modal", data-target="#webpageEditModal", data-name="#{page.name}", data-url="#{page.url}", data-id="#{page._id}", style="margin:0px 2px")
+                span.glyphicon.glyphicon-pencil
+                | Edit
+            button.btn.btn-xs.btn-primary.pull-right(type="button", data-toggle="modal", data-target="#webpageSnipetModal", data-name="#{page.name}", data-url="#{page.url}", data-id="#{page._id}", style="margin:0px 2px")
+                | Get Snippet
 
             .clearfix
 
@@ -39,29 +32,33 @@ block content
                 .tab-pane.fade.in.active#videos(role="tabpanel")
 
 
-                    //if webpages.length > 0
-                    div.div-simple-little-table
-                        span Registered web pages to track
-                        table.simple-little-table
-                            thead
-                                tr
-                                    th #
-                                    th Name
-                                    th Url
-                                    th Preview
-                            tbody
-                                //each webpage, i in webpages
-                                tr
-                                    td 1.
-                                    td Video
-                                    td
-                                        a(href="#") ya.ru
-                                    td
-                                        img(src="/images/video_preview.png", style="width:150px")
+                    if videos.length > 0
+                        div.div-simple-little-table
+                            span Registered videos to track
+                            table.simple-little-table
+                                thead
+                                    tr
+                                        th #
+                                        th Name
+                                        th Url
+                                        th Preview
+                                tbody
+                                    each video, i in videos
+                                        tr
+                                            td #{i + 1}.
+                                            td #{video.name}
+                                            td
+                                                a(href="#{video.url}")
+                                                    if(video.url.length > 50)
+                                                        | #{video.url.substr(0, 49) + '...'}
+                                                    else
+                                                        | #{video.url}
+                                            td
+                                                img(src="#{video.picture}", style="width:150px")
 
 
-                    //else
-                        p There are no web pages registered for tracking!
+                    else
+                        p There are no videos registered for tracking!
 
                 .tab-pane.fade#statistics(role="tabpanel")
                     script(src="/scripts/statistics_drawer.js")
@@ -90,8 +87,9 @@ block content
             a.btn.btn-danger(href="/page")
                 span.glyphicon.glyphicon-arrow-left
                 | Return
-        a.btn.btn-primary(style="margin:20px 0px 20px 2px", href="#{page.url}")
-            | Go to the site
+        if page
+            a.btn.btn-primary(style="margin:20px 0px 20px 2px", href="#{page.url}")
+                | Go to the site
 
     #webpageEditModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="exampleModalLabel", aria-hidden="true")
         .modal-dialog
@@ -123,6 +121,7 @@ block content
                         span.sr-only Close
                     h4.modal-title Edit web page info
                 .modal-body
+                    textarea#snippet-copy(style="width: 100%; height: 400px")
                 .modal-footer
                     button.btn.btn-default(type="button", data-dismiss="modal") Close
     script(src="/scripts/statistics_drawer.js")
@@ -153,7 +152,7 @@ block content
 
             $.get('/page/snipet/' + webpageId)
                     .done(function (data) {
-                        modal.find('.modal-body').text(data.snipet);
+                        modal.find('.modal-body textarea').text(data.snipet);
                     });
         })
 
@@ -177,4 +176,14 @@ block content
                         alert("The page deleted!");
                         location.reload();
                     });
+        })
+
+        $("#snippet-copy").focus(function(){
+            $(this).select();
+            $("#webpageSnipetModal").find('.modal-body').append('<div class="alert alert-success" id="copy-msg" role="alert">To copy the snippet press Ctrl+C and insert it to your webpage</div>');
+        })
+
+        $("#snippet-copy").focusout(function(){
+            if($("#webpageSnipetModal").find('.modal-body #copy-msg').length >0)
+                $(".modal-body #copy-msg").remove();
         })

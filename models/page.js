@@ -19,6 +19,7 @@ WebpageSchema.path('name').validate(function (value) {
 }, 'Invalid name');
 
 WebpageSchema.path('url').validate(function (value) {
+
     return /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/.test(value);
 }, 'Invalid url');
 
@@ -29,5 +30,6 @@ WebpageSchema.path('url').validate(function(value, done) {
         });
     } else done(true);
 }, 'Url already exists');
+
 
 module.exports = mongoose.model('Page', WebpageSchema);

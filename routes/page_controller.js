@@ -4,6 +4,7 @@
 var express = require('express');
 var router = express.Router();
 var Page = require('./../models/page');
+var Video = require('./../models/video');
 var uuid = require('node-uuid');
 fs = require('fs');
 
@@ -103,13 +104,24 @@ router
             },
             function (err, page) {
                 if (err) console.log(err);
-                if (page == undefined || page == null) console.log('Page is not found!');
-                console.log(page);
-                res.render('single_page', {"page": page})
+                if (page == undefined || page == null) {
+                    console.log('Page is not found!');
+                    res.render('single_page', {"page": page, "videos": []})
+                }
+                else{
+                    console.log(page.videos);
+                    Video.find({'_id': {$in: page.videos}},
+                    function (err, videos) {
+                        console.log(videos);
+                        res.render('single_page', {"page": page, "videos": videos})
+
+                    });
+                }
             });
-    })
+    });
 
 function generate_token(page) {
     return uuid.v4();
 }
+
 module.exports = router;

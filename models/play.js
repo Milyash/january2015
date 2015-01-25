@@ -2,21 +2,30 @@ var mongoose = require('mongoose'),
     extend = require('mongoose-schema-extend'),
     Schema = mongoose.Schema,
     EventSchema = require('./event.js');
+var relationship = require("mongoose-relationship");
 
 var PlaySchema = EventSchema.extend({});
 
 PlaySchema.methods.createPlay = function createEvent(time, video) {
-    this.time = time;
-    this.video = video;
-
+    if (video) {
+        this.video = video;
+        this.time = time;
+    }
+    else {
+        this.video = null;
+        this.time = null;
+    }
     console.log(this);
 };
 
-PlaySchema.methods.savePlay = function saveEvent() {
-    this.save(function (err) {
-        if (err) res.send(err);
-        res.json({message: 'Pause created!'});
-    });
+PlaySchema.methods.savePlay = function saveEvent(req, res) {
+    if (this.video)
+        this.save(function (err) {
+            if (err) res.send(err);
+            console.log('Play created!');
+        });
+    else
+        console.log("Play is not created!");
 };
 
 PlaySchema.statics.findPlay = function findEvent() {
@@ -31,4 +40,5 @@ PlaySchema.statics.findPlay = function findEvent() {
 };
 
 
+PlaySchema.plugin(relationship, {relationshipPathName: 'video'});
 module.exports = mongoose.model('Play', PlaySchema);

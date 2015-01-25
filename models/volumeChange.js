@@ -2,6 +2,7 @@ var mongoose = require('mongoose'),
     extend = require('mongoose-schema-extend'),
     Schema = mongoose.Schema,
     EventSchema = require('./event.js');
+var relationship = require("mongoose-relationship");
 
 var VolumeChangeSchema = EventSchema.extend({
     from_volume: Number,
@@ -9,19 +10,28 @@ var VolumeChangeSchema = EventSchema.extend({
 });
 
 VolumeChangeSchema.methods.createVolumeChange = function createEvent(time, from_volume, to_volume, video) {
-    this.time = time;
-    this.from_volume = from_volume;
-    this.to_volume = to_volume;
-    this.video = video;
-
+    if (video) {
+        this.time = time;
+        this.from_volume = from_volume;
+        this.to_volume = to_volume;
+        this.video = video;
+    } else {
+        this.time = null;
+        this.from_volume = null;
+        this.to_volume = null;
+        this.video = null;
+    }
     console.log(this);
 };
 
 VolumeChangeSchema.methods.saveVolumeChange = function saveEvent() {
-    this.save(function (err) {
-        if (err) res.send(err);
-        res.json({message: 'VolumeChange created!'});
-    });
+    if (this.video)
+        this.save(function (err) {
+            if (err) res.send(err);
+            console.log('VolumeChange created!');
+        });
+    else
+        console.log("Play is not created!");
 };
 
 VolumeChangeSchema.statics.findVolumeChange = function findEvent() {
@@ -35,4 +45,5 @@ VolumeChangeSchema.statics.findVolumeChange = function findEvent() {
     return v;
 };
 
+VolumeChangeSchema.plugin(relationship, {relationshipPathName: 'video'});
 module.exports = mongoose.model('VolumeChange', VolumeChangeSchema);

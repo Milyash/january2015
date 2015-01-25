@@ -8,7 +8,7 @@ block content
         if webpages.length > 0
             div.div-simple-little-table
                 span(style="display:inline") Registered web pages to track
-                table.simple-little-table
+                table.simple-little-table.larger-cells
                     thead
                         tr
                             th #
@@ -24,7 +24,7 @@ block content
                             td.bottomright
                                 a(href="#{webpage.url}")
                                     if(webpage.url.length > 50)
-                                        | #{webpage.url.substr(1, 50) + '...'}
+                                        | #{webpage.url.substr(0, 49) + '...'}
                                     else
                                         | #{webpage.url}
                             td.invisible-simple-little-table(style="width: 210px")
@@ -91,8 +91,7 @@ block content
                         span.sr-only Close
                     h4.modal-title Edit web page info
                 .modal-body
-
-
+                    textarea#snippet-copy(style="width: 100%; height: 400px")
                 .modal-footer
                     button.btn.btn-default(type="button", data-dismiss="modal") Close
     script.
@@ -121,7 +120,7 @@ block content
 
             $.get('/page/snipet/' + webpageId)
                     .done(function (data) {
-                        modal.find('.modal-body').text(data.snipet);
+                        modal.find('.modal-body textarea').text(data.snipet);
                     });
         })
 
@@ -159,7 +158,6 @@ block content
         })
 
         $("#delete-page").click(function () {
-
             alert("QWE");
             var page_id = $(this).data('id');
             $.ajax({
@@ -173,5 +171,12 @@ block content
                     });
         })
 
+        $("#snippet-copy").focus(function(){
+            $(this).select();
+            $("#webpageSnipetModal").find('.modal-body').append('<div class="alert alert-success" id="copy-msg" role="alert">To copy the snippet press Ctrl+C and insert it to your webpage</div>');
+        })
 
-
+        $("#snippet-copy").focusout(function(){
+            if($("#webpageSnipetModal").find('.modal-body #copy-msg').length >0)
+                $(".modal-body #copy-msg").remove();
+        })

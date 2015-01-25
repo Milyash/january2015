@@ -1,7 +1,7 @@
 $("#clear").click(function () {
     $("#result").empty();
 });
-
+var token = '812589cf-bc1a-42dd-93f8-d32e60b37039';
 // add video alt
 
 var iframe = $('.video');
@@ -30,11 +30,13 @@ $.each(iframe, function (i, video) {
                     data = {};
                     data.page_url = $(location).attr('href');
                     data.video_url = $(iframe[i]).attr('src');
+                    data.video_name = $(iframe[i]).attr('alt');
                     data.event = "volumechange";
                     data.from_volume = current_volume;
                     data.to_volume = new_volume;
                     data.time = current_time;
                     data.video_id = id;
+                    data.token = token;
                     postData(data, urlBase + "/api/volumechange");
                     result.append("<li>" + id + " muted! from " + current_volume + "to " + new_volume + "</li>");
                     current_volume = new_volume;
@@ -48,11 +50,11 @@ $.each(iframe, function (i, video) {
             var dataToSend = {};
             dataToSend.page_url = $(location).attr('href');
             dataToSend.video_url = $(iframe[i]).attr('src');
-            console.log($(location).attr('href'));
-            console.log($(iframe[i]).attr('src'));
+            dataToSend.video_name = $(iframe[i]).attr('alt');
             dataToSend.event = "play";
             dataToSend.time = current_time;
             dataToSend.video_id = id;
+            dataToSend.token = token;
             postData(dataToSend, urlBase + "/api/play");
             result.append("<li>" + id + " -> play!, time = " + current_time + "sec </li>");
         };
@@ -61,9 +63,11 @@ $.each(iframe, function (i, video) {
             var dataToSend = {};
             dataToSend.page_url = $(location).attr('href');
             dataToSend.video_url = $(iframe[i]).attr('src');
+            dataToSend.video_name = $(iframe[i]).attr('alt');
             dataToSend.event = "pause";
             dataToSend.time = current_time;
             dataToSend.video_id = id;
+            dataToSend.token = token;
             postData(dataToSend, urlBase + "/api/pause");
             result.append("<li>" + id + " -> pause!, time = " + current_time + "sec </li>");
         };
@@ -72,10 +76,12 @@ $.each(iframe, function (i, video) {
             var dataToSend = {};
             dataToSend.page_url = $(location).attr('href');
             dataToSend.video_url = $(iframe[i]).attr('src');
+            dataToSend.video_name = $(iframe[i]).attr('alt');
             dataToSend.event = "seek";
             dataToSend.time_from = current_time;
             dataToSend.time_to = data.seconds;
             dataToSend.video_id = id;
+            dataToSend.token = token;
             postData(dataToSend, urlBase + "/api/seek");
             result.append("<li>" + id + " -> seeking! from " + current_time + " to " + data.seconds.toFixed(2) + "sec </li>");
         };

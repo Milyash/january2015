@@ -3,14 +3,18 @@ extends layout
 block content
   p #{flash}
   #data
-    form(style="max-width: 330px;", method="post")
-      h2.form-signin-heading Sign up
-      label.sr-only(for="inputUsername") Username
-      input#inputUsername.form-control(name="username",type="text", placeholder="Username", required="", autofocus="")
-      label.sr-only(for="inputEmail") Email address
-      input#inputEmail.form-control(name="email",type="email", placeholder="Email address", required="", autofocus="")
-      label.sr-only(for="inputPassword") Password
-      input#inputPassword.form-control(name="password",type="password", placeholder="Password", required="")
-      input#inputPassword.form-control(name="password2",type="password", placeholder="Retype password", required="")
-      button.btn.btn-lg.btn-primary.btn-block(type="submit") Sign in
-      <a href="/users/login">Login</a>
+    div.div-simple-little-table(style="max-width: 400px; margin: 20px auto")
+      form(style="max-width: 330px; margin:20px auto", method="post")
+        h4.form-signin-heading Sign up
+        label.sr-only(for="inputUsername") Username
+        input#inputUsername.form-control(name="username",type="text", placeholder="Username", required="", autofocus="", style="margin:5px;")
+        label.sr-only(for="inputEmail") Email address
+        input#inputEmail.form-control(name="email",type="email", placeholder="Email address", required="", autofocus="", style="margin:5px;")
+        label.sr-only(for="inputPassword") Password
+        input#inputPassword.form-control(name="password",type="password", placeholder="Password", required="", style="margin:5px;")
+        input#inputPassword.form-control(name="password2",type="password", placeholder="Retype password", required="", style="margin:5px;")
+        button.btn.btn-primary.btn-block.pull-right(type="submit", style="margin:5px 0px; width: 150px;") Sign in
+        .clearfix
+        a.pull-right(href="/users/login")  Login
+        .pull-right.
+          or &nbsp;

@@ -1,29 +1,117 @@
 0 info it worked if it ends with ok
 1 verbose cli [ 'C:\\Server\\nodejs\\\\node.exe',
 1 verbose cli   'C:\\Server\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
-1 verbose cli   'start' ]
+1 verbose cli   'install' ]
 2 info using npm@1.4.28
 3 info using node@v0.10.33
 4 verbose node symlink C:\Server\nodejs\\node.exe
-5 verbose run-script [ 'prestart', 'start', 'poststart' ]
-6 info prestart video-statistic@0.0.0
-7 info start video-statistic@0.0.0
-8 verbose unsafe-perm in lifecycle true
-9 info video-statistic@0.0.0 Failed to exec start script
-10 error video-statistic@0.0.0 start: `node ./bin/www`
-10 error Exit status 8
-11 error Failed at the video-statistic@0.0.0 start script.
-11 error This is most likely a problem with the video-statistic package,
-11 error not with npm itself.
-11 error Tell the author that this fails on your system:
-11 error     node ./bin/www
-11 error You can get their info via:
-11 error     npm owner ls video-statistic
-11 error There is likely additional logging output above.
-12 error System Windows_NT 6.1.7601
-13 error command "C:\\Server\\nodejs\\\\node.exe" "C:\\Server\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "start"
-14 error cwd D:\dev\node\video-statistic
-15 error node -v v0.10.33
-16 error npm -v 1.4.28
-17 error code ELIFECYCLE
-18 verbose exit [ 1, true ]
+5 verbose readDependencies using package.json deps
+6 verbose install where, deps [ 'D:\\dev\\node\\january2015',
+6 verbose install   [ 'express',
+6 verbose install     'body-parser',
+6 verbose install     'cookie-parser',
+6 verbose install     'morgan',
+6 verbose install     'serve-favicon',
+6 verbose install     'debug',
+6 verbose install     'jade',
+6 verbose install     'mongoose',
+6 verbose install     'mongoose-schema-extend',
+6 verbose install     'fs',
+6 verbose install     'node-uuid',
+6 verbose install     'mongoose-relationship',
+6 verbose install     'nodemailer',
+6 verbose install     'express-session',
+6 verbose install     'node-curl' ] ]
+7 info preinstall video-statistic@0.0.0
+8 warn package.json fs@0.0.2 fs is also the name of a node core module.
+9 warn package.json fs@0.0.2 No description
+10 warn package.json fs@0.0.2 No repository field.
+11 verbose readDependencies using package.json deps
+12 verbose already installed skipping express@~4.9.0 D:\dev\node\january2015
+13 verbose already installed skipping body-parser@~1.8.1 D:\dev\node\january2015
+14 verbose already installed skipping cookie-parser@~1.3.3 D:\dev\node\january2015
+15 verbose already installed skipping morgan@~1.3.0 D:\dev\node\january2015
+16 verbose already installed skipping serve-favicon@~2.1.3 D:\dev\node\january2015
+17 verbose already installed skipping debug@~2.0.0 D:\dev\node\january2015
+18 verbose already installed skipping jade@~1.6.0 D:\dev\node\january2015
+19 verbose already installed skipping mongoose@* D:\dev\node\january2015
+20 verbose already installed skipping mongoose-schema-extend@* D:\dev\node\january2015
+21 verbose already installed skipping fs@* D:\dev\node\january2015
+22 verbose already installed skipping node-uuid@* D:\dev\node\january2015
+23 verbose already installed skipping mongoose-relationship@* D:\dev\node\january2015
+24 verbose already installed skipping nodemailer@* D:\dev\node\january2015
+25 verbose already installed skipping express-session@* D:\dev\node\january2015
+26 verbose cache add [ 'node-curl@0.3.4', null ]
+27 verbose cache add name=undefined spec="node-curl@0.3.4" args=["node-curl@0.3.4",null]
+28 verbose parsed url { protocol: null,
+28 verbose parsed url   slashes: null,
+28 verbose parsed url   auth: null,
+28 verbose parsed url   host: null,
+28 verbose parsed url   port: null,
+28 verbose parsed url   hostname: null,
+28 verbose parsed url   hash: null,
+28 verbose parsed url   search: null,
+28 verbose parsed url   query: null,
+28 verbose parsed url   pathname: 'node-curl@0.3.4',
+28 verbose parsed url   path: 'node-curl@0.3.4',
+28 verbose parsed url   href: 'node-curl@0.3.4' }
+29 verbose cache add name="node-curl" spec="0.3.4" args=["node-curl","0.3.4"]
+30 verbose parsed url { protocol: null,
+30 verbose parsed url   slashes: null,
+30 verbose parsed url   auth: null,
+30 verbose parsed url   host: null,
+30 verbose parsed url   port: null,
+30 verbose parsed url   hostname: null,
+30 verbose parsed url   hash: null,
+30 verbose parsed url   search: null,
+30 verbose parsed url   query: null,
+30 verbose parsed url   pathname: '0.3.4',
+30 verbose parsed url   path: '0.3.4',
+30 verbose parsed url   href: '0.3.4' }
+31 verbose addNamed [ 'node-curl', '0.3.4' ]
+32 verbose addNamed [ '0.3.4', '0.3.4' ]
+33 silly lockFile be735998-node-curl-0-3-4 node-curl@0.3.4
+34 verbose lock node-curl@0.3.4 C:\Users\Milya\AppData\Roaming\npm-cache\be735998-node-curl-0-3-4.lock
+35 verbose request where is /node-curl
+36 verbose request registry https://registry.npmjs.org/
+37 verbose request id 1a2b4dbab967c747
+38 verbose url raw /node-curl
+39 verbose url resolving [ 'https://registry.npmjs.org/', './node-curl' ]
+40 verbose url resolved https://registry.npmjs.org/node-curl
+41 verbose request where is https://registry.npmjs.org/node-curl
+42 info trying registry request attempt 1 at 15:17:05
+43 verbose etag "EO4POLZEV4HVH1C8W13W2NFE5"
+44 http GET https://registry.npmjs.org/node-curl
+45 http 304 https://registry.npmjs.org/node-curl
+46 silly registry.get cb [ 304,
+46 silly registry.get   { date: 'Sun, 25 Jan 2015 14:17:06 GMT',
+46 silly registry.get     server: 'Apache',
+46 silly registry.get     via: '1.1 varnish',
+46 silly registry.get     'last-modified': 'Sun, 25 Jan 2015 14:17:06 GMT',
+46 silly registry.get     'cache-control': 'max-age=60',
+46 silly registry.get     etag: '"EO4POLZEV4HVH1C8W13W2NFE5"',
+46 silly registry.get     age: '0',
+46 silly registry.get     'x-served-by': 'cache-ams4127-AMS',
+46 silly registry.get     'x-cache': 'MISS',
+46 silly registry.get     'x-cache-hits': '0',
+46 silly registry.get     'x-timer': 'S1422195426.487846,VS0,VE378',
+46 silly registry.get     vary: 'Accept',
+46 silly registry.get     'content-length': '0',
+46 silly registry.get     'keep-alive': 'timeout=10, max=50',
+46 silly registry.get     connection: 'Keep-Alive' } ]
+47 verbose etag https://registry.npmjs.org/node-curl from cache
+48 silly lockFile be735998-node-curl-0-3-4 node-curl@0.3.4
+49 silly lockFile be735998-node-curl-0-3-4 node-curl@0.3.4
+50 error Error: version not found: node-curl@0.3.4
+50 error     at C:\Server\nodejs\node_modules\npm\lib\cache\add-named.js:125:12
+50 error     at saved (C:\Server\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\get.js:167:7)
+50 error     at Object.oncomplete (fs.js:107:15)
+51 error If you need help, you may report this *entire* log,
+51 error including the npm and node versions, at:
+51 error     <http://github.com/npm/npm/issues>
+52 error System Windows_NT 6.1.7601
+53 error command "C:\\Server\\nodejs\\\\node.exe" "C:\\Server\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install"
+54 error cwd D:\dev\node\january2015
+55 error node -v v0.10.33
+56 error npm -v 1.4.28
+57 verbose exit [ 1, true ]

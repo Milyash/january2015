@@ -8,12 +8,19 @@ var Schema = mongoose.Schema;
 var VideoSchema = new Schema({
     name: String,
     url: String,
-    page: { type:Schema.ObjectId, ref:"Page", childPath:"videos" },
+    page: {type: Schema.ObjectId, ref: "Page", childPath: "videos"},
     picture: String,
     //watches: [{type: Schema.Types.ObjectId, ref: 'Watch'}]
     events: [{type: Schema.ObjectId, ref: "Event"}]
 });
 
-mongoose.model('Video', VideoSchema);
+VideoSchema.methods.createVideo = function createVideo(name, url, page, picture) {
+    this.name = name;
+    this.url = url;
+    this.page = page;
+    this.picture = picture;
+    this.events = [];
+}
 
-module.exports = VideoSchema;
+VideoSchema.plugin(relationship, {relationshipPathName: 'page'});
+module.exports = mongoose.model('Video', VideoSchema);

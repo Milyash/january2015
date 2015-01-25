@@ -74,11 +74,12 @@ function isAuth(req,res,next){
         res.redirect('/users/login');
     }
 }
+
 function templateVars(req, res, next) {
     res.locals.req = req
     next()
 }
-app.use('/api', templateVars, isAuth, api);
+app.use('/api', templateVars, api);
 app.use('/page', templateVars, isAuth, page_controller);
 app.use('/users', templateVars, user_controller);
 app.use('/', templateVars, isAuth, routes);

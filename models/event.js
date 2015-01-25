@@ -1,5 +1,6 @@
-var mongoose = require('mongoose')
-var Webpage = require
+var mongoose = require('mongoose');
+var Webpage = require;
+var relationship = require("mongoose-relationship");
 
 var Schema = mongoose.Schema;
 
@@ -11,5 +12,6 @@ var EventSchema = new Schema({
 
 
 
+EventSchema.plugin(relationship, {relationshipPathName: 'video'});
 mongoose.model('Event', EventSchema);
 module.exports = EventSchema;

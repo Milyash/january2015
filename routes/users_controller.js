@@ -22,7 +22,7 @@ router.post('/login', function (req, res) {
             return
         }
         req.session.userId = user.id
-        res.redirect('/')
+        res.redirect('/page')
     })
 });
 

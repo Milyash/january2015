@@ -12,7 +12,6 @@ var WatchSchema = new Schema({
     client: {type: String, enum: ['Opera', 'Browser']},
     events: [{type: Schema.ObjectId, ref: "Event"}]
 });
+;
 
-mongoose.model('Watch', WatchSchema);
-
-module.exports = VideoSchema;
+module.exports = mongoose.model('Watch', WatchSchema);

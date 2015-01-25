@@ -2,24 +2,33 @@ var mongoose = require('mongoose'),
     extend = require('mongoose-schema-extend'),
     Schema = mongoose.Schema,
     EventSchema = require('./event.js');
+var relationship = require("mongoose-relationship");
 
 var SeekSchema = EventSchema.extend({
     time_to: Number
 });
 
 SeekSchema.methods.createSeek = function createEvent(time, time_to, video) {
-    this.time = time;
-    this.time_to = time_to;
-    this.video = video;
-
+    if (video) {
+        this.time = time;
+        this.time_to = time_to;
+        this.video = video;
+    } else {
+        this.time = null;
+        this.time_to = null;
+        this.video = null;
+    }
     console.log(this);
 };
 
 SeekSchema.methods.saveSeek = function saveEvent() {
-    this.save(function (err) {
-        if (err) res.send(err);
-        res.json({message: 'Seek created!'});
-    });
+    if (this.video)
+        this.save(function (err) {
+            if (err) res.send(err);
+            console.log('Seek created!');
+        });
+    else
+        console.log("Play is not created!");
 };
 
 SeekSchema.statics.findSeek = function findEvent() {
@@ -33,4 +42,5 @@ SeekSchema.statics.findSeek = function findEvent() {
     return s;
 };
 
+SeekSchema.plugin(relationship, {relationshipPathName: 'video'});
 module.exports = mongoose.model('Seek', SeekSchema);
