@@ -279,7 +279,7 @@ google.load('visualization', '1', {packages: ['corechart']});
     var viewsOptions = {
         title: 'Views',
         backgroundColor: "transparent",
-        width: 600,
+        width: 900,
         height: 400,
         hAxis: {title: 'Time'},
         vAxis: {title: 'Views'}
@@ -349,7 +349,7 @@ google.load('visualization', '1', {packages: ['corechart']});
 
 
     var volumeDiagramOptions = {
-        width: 600,
+        width: 900,
         height: 400,
         animation: {
             duration: 700
