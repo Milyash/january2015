@@ -10,7 +10,7 @@ fs = require('fs');
 
 router
     .get('/', function (req, res) {
-        Page.find({'active': true},
+        Page.find({'active': true, userId: req.session.userId },
             function (err, webpages) {
                 if (err)
                     res.send(err);
@@ -70,6 +70,7 @@ router
         page.name = req.body.name;
         page.url = req.body.url;
         page.active = true;
+        page.userId = req.session.userId;
         page.token = generate_token(page);
         page.save(function (err) {
             if (err) {
