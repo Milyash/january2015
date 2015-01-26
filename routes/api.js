@@ -3,18 +3,18 @@
  */
 var express = require('express');
 var router = express.Router();
+var mongoose = require('mongoose');
+var http = require('http');
+var Page = require('../models/page');
+var Video = require('../models/video');
 var Pause = require('../models/pause');
 var Play = require('../models/play');
 var Seek = require('../models/seek');
-var Video = require('../models/video');
-var Page = require('../models/page');
-var http = require('http');
 var VolumeChange = require('../models/volumeChange');
-var mongoose = require('mongoose');
 var Event = mongoose.model('Event');
 
 
-function createPlay(request, next) {
+function createEvent(request, next) {
     getPage(request, next);
 }
 
@@ -33,7 +33,6 @@ function getPage(request, next) {
 
 function setVideoThumbnail(video) {
     var videoId = video.url.match(/vimeo\.com\/video\/(\d+)/)[1];
-    console.log(videoId + " /////////////");
     if (videoId != null || videoId != undefined || videoId != "") {
         var options = {
             hostname: 'vimeo.com',
@@ -47,13 +46,13 @@ function setVideoThumbnail(video) {
             res.on("data", function (chunk) {
                 data += chunk;
             });
-            res.on("end", function(){
+            res.on("end", function () {
                 var videoData = JSON.parse(data);
-                 if (videoData.length == 1) {
-                 video.picture = videoData[0].thumbnail_medium;
-                 video.save();
-                 }
-                 console.log(video + " updated!");
+                if (videoData.length == 1) {
+                    video.picture = videoData[0].thumbnail_medium;
+                    video.save();
+                }
+                console.log(video + " updated!");
             })
 
         });
@@ -93,7 +92,7 @@ function getVideo(page, request, next) {
 router
     .post('/play', function (req, res) {
         var play = new Play();
-        createPlay(req, function (video) {
+        createEvent(req, function (video) {
             play.createPlay(req.body.time, video);
             play.savePlay(req, res);
         });
@@ -101,35 +100,45 @@ router
 
     .post('/pause', function (req, res) {
         var pause = new Pause();
-        pause.createPause(req.body.time, getVideo(req));
-        pause.savePause();
+        createEvent(req, function (video) {
+            pause.createPause(req.body.time, video);
+            pause.savePause(req, res);
+        });
     })
     .post('/seek', function (req, res) {
         var seek = new Seek();
-        seek.createSeek(req.body.time, req.body.time_to, getVideo(req));
-        seek.saveSeek();
+        createEvent(req, function (video) {
+            seek.createSeek(req.body.time_from, req.body.time_to, video);
+            seek.saveSeek(req, res);
+        });
     })
     .post('/volumechange', function (req, res) {
         var volumeChange = new VolumeChange();
-        volumeChange.createVolumeChange(req.body.time, req.body.from_volume, req.body.to_volume, getVideo(req));
-        volumeChange.saveVolumeChange();
+        createEvent(req, function (video) {
+            volumeChange.createVolumeChange(req.body.time, req.body.from_volume, req.body.to_volume, video);
+            volumeChange.saveVolumeChange(req, res);
+        });
     })
 
     .get('/play', function (req, res) {
-        var plays = Play.findPlay();
-        res.json(plays);
+        Play.findPlay(function (plays) {
+            res.json(plays);
+        });
     })
     .get('/pause', function (req, res) {
-        var pauses = Pause.findPauses();
-        res.json(pauses);
+        Pause.findPause(function (pauses) {
+            res.json(pauses);
+        });
     })
     .get('/seek', function (req, res) {
-        var seeks = Seek.findSeek();
-        res.json(seeks);
+        Seek.findSeek(function (seeks) {
+            res.json(seeks);
+        });
     })
     .get('/volumechange', function (req, res) {
-        var volumeChanges = VolumeChange.findVolumeChange();
-        res.json(volumeChanges);
+        VolumeChange.findVolumeChange(function (volumeChanges) {
+            res.json(volumeChanges);
+        });
     })
     .get('/page/:id', function (req, res) {
         Page.findOne({'_id': req.params.id})

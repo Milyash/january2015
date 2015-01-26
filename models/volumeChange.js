@@ -34,15 +34,13 @@ VolumeChangeSchema.methods.saveVolumeChange = function saveEvent() {
         console.log("Play is not created!");
 };
 
-VolumeChangeSchema.statics.findVolumeChange = function findEvent() {
-    var v = [];
+VolumeChangeSchema.statics.findVolumeChange = function findEvent(next) {
     this.find(
         {"_type": "VolumeChange"},
         function (err, volumeChanges) {
             if (err) res.send(err);
-            v = volumeChanges;
+            next(volumeChanges);
         });
-    return v;
 };
 
 VolumeChangeSchema.plugin(relationship, {relationshipPathName: 'video'});

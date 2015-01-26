@@ -21,7 +21,7 @@ SeekSchema.methods.createSeek = function createEvent(time, time_to, video) {
     console.log(this);
 };
 
-SeekSchema.methods.saveSeek = function saveEvent() {
+SeekSchema.methods.saveSeek = function saveEvent(req, res) {
     if (this.video)
         this.save(function (err) {
             if (err) res.send(err);
@@ -31,15 +31,13 @@ SeekSchema.methods.saveSeek = function saveEvent() {
         console.log("Play is not created!");
 };
 
-SeekSchema.statics.findSeek = function findEvent() {
-    var s = [];
+SeekSchema.statics.findSeek = function findEvent(next) {
     this.find(
         {"_type": "Seek"},
         function (err, seeks) {
             if (err) res.send(err);
-            s = seeks;
+            next(seeks)
         });
-    return s;
 };
 
 SeekSchema.plugin(relationship, {relationshipPathName: 'video'});

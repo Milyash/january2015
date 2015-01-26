@@ -25,18 +25,16 @@ PlaySchema.methods.savePlay = function saveEvent(req, res) {
             console.log('Play created!');
         });
     else
-        console.log("Play is not created!");
+        console.log("Play is not created! Video is missing!");
 };
 
-PlaySchema.statics.findPlay = function findEvent() {
-    var p = [];
+PlaySchema.statics.findPlay = function findEvent(next) {
     this.find(
         {"_type": "Play"},
         function (err, plays) {
             if (err) res.send(err);
-            p = plays;
+            next(plays);
         });
-    return p;
 };
 
 
