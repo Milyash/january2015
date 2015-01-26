@@ -288,6 +288,10 @@ google.load('visualization', '1', {packages: ['corechart']});
         for (var time in viewsDataObject) {
             var data = viewsDataObject[time];
             quantity = quantity + data;
+            if (quantity < 0) {
+                quantity = 0;
+            }
+            ;
             viewsDataArray.push([parseInt(time), quantity]);
         }
     };
@@ -335,6 +339,11 @@ google.load('visualization', '1', {packages: ['corechart']});
         volumeDataArray = [
             ['ID', 'Time', 'Quantity of Watchers', 'Type', 'Difference']
         ];
+        if (volumeStatisticsData.length > 0) {
+            document.getElementById("volumeDiagram").style.display = "inline-block";
+        } else {
+            document.getElementById("volumeDiagram").style.display = "none";
+        }
         for (var i = 0; i < volumeStatisticsData.length; i++) {
             var data = volumeStatisticsData[i];
             if (data.time != undefined) {
