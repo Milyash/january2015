@@ -6,7 +6,7 @@ var relationship = require("mongoose-relationship");
 
 var PauseSchema = EventSchema.extend({});
 
-PauseSchema.methods.createPause = function createEvent(time, video) {
+PauseSchema.methods.createPause = function (time, video) {
     if (video) {
         this.time = time;
         this.video = video;
@@ -17,7 +17,7 @@ PauseSchema.methods.createPause = function createEvent(time, video) {
     console.log(this);
 };
 
-PauseSchema.methods.savePause = function saveEvent(req, res) {
+PauseSchema.methods.savePause = function (req, res) {
     if (this.video)
         this.save(function (err) {
             if (err) res.send(err);
@@ -27,9 +27,11 @@ PauseSchema.methods.savePause = function saveEvent(req, res) {
         console.log("Pause is not created!");
 };
 
-PauseSchema.statics.findPause = function findEvent(next) {
+PauseSchema.statics.findPause = function (pauses, next) {
+    var opts = options || {};
+    opts._type = 'Pause';
     this.find(
-        {"_type": "Pause"},
+        opts,
         function (err, pauses) {
             if (err) res.send(err);
             next(pauses);

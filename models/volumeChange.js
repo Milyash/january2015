@@ -9,13 +9,13 @@ var VolumeChangeSchema = EventSchema.extend({
     to_volume: Number
 });
 
-VolumeChangeSchema.methods.createVolumeChange = function createEvent(time, from_volume, to_volume, video) {
+VolumeChangeSchema.methods.createVolumeChange = function (time, from_volume, to_volume, video) {
     if (video) {
         this.time = time;
         this.from_volume = from_volume;
         this.to_volume = to_volume;
         this.video = video;
-    } else {
+    } else {    
         this.time = null;
         this.from_volume = null;
         this.to_volume = null;
@@ -24,7 +24,7 @@ VolumeChangeSchema.methods.createVolumeChange = function createEvent(time, from_
     console.log(this);
 };
 
-VolumeChangeSchema.methods.saveVolumeChange = function saveEvent() {
+VolumeChangeSchema.methods.saveVolumeChange = function () {
     if (this.video)
         this.save(function (err) {
             if (err) res.send(err);
@@ -34,9 +34,11 @@ VolumeChangeSchema.methods.saveVolumeChange = function saveEvent() {
         console.log("Play is not created!");
 };
 
-VolumeChangeSchema.statics.findVolumeChange = function findEvent(next) {
+VolumeChangeSchema.statics.findVolumeChange = function (options, next) {
+    var opts = options || {};
+    opts._type = 'VolumeChange';
     this.find(
-        {"_type": "VolumeChange"},
+        opts,
         function (err, volumeChanges) {
             if (err) res.send(err);
             next(volumeChanges);

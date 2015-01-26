@@ -8,7 +8,7 @@ var SeekSchema = EventSchema.extend({
     time_to: Number
 });
 
-SeekSchema.methods.createSeek = function createEvent(time, time_to, video) {
+SeekSchema.methods.createSeek = function (time, time_to, video) {
     if (video) {
         this.time = time;
         this.time_to = time_to;
@@ -21,7 +21,7 @@ SeekSchema.methods.createSeek = function createEvent(time, time_to, video) {
     console.log(this);
 };
 
-SeekSchema.methods.saveSeek = function saveEvent(req, res) {
+SeekSchema.methods.saveSeek = function (req, res) {
     if (this.video)
         this.save(function (err) {
             if (err) res.send(err);
@@ -31,9 +31,11 @@ SeekSchema.methods.saveSeek = function saveEvent(req, res) {
         console.log("Play is not created!");
 };
 
-SeekSchema.statics.findSeek = function findEvent(next) {
+SeekSchema.statics.findSeek = function (options, next) {
+    var opts = options || {};
+    opts._type = 'Seek';
     this.find(
-        {"_type": "Seek"},
+        opts,
         function (err, seeks) {
             if (err) res.send(err);
             next(seeks)

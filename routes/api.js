@@ -82,7 +82,6 @@ function getVideo(page, request, next) {
                 console.log("Video creating" + video);
 
             }
-            else console.log('Page is not found!');
             next(video);
         }
     )
@@ -140,12 +139,41 @@ router
             res.json(volumeChanges);
         });
     })
-    .get('/page/:id', function (req, res) {
-        Page.findOne({'_id': req.params.id})
-            .populate('videos')
-            .exec(function (err, videos) {
-                res.json(videos);
-            })
+    .get('/video/:id/play', function (req, res) {
+        var videoId = req.params.id;
+        Video.findOne({"_id":videoId}, function(err,video){
+            if (err || !video) res.send(err + video);
+            Play.findPlay({"video": video._id}, function (plays) {
+                res.json(plays);
+            });
+        })
+    })
+    .get('/video/:id/pause', function (req, res) {
+        var videoId = req.params.id;
+        Video.findOne({"_id":videoId}, function(err,video){
+            if (err || !video) res.send(err + video);
+            Pause.findPause({"video": video._id}, function (pauses) {
+                res.json(plays);
+            });
+        })
+    })
+    .get('/video/:id/seek', function (req, res) {
+        var videoId = req.params.id;
+        Video.findOne({"_id":videoId}, function(err,video){
+            if (err || !video) res.send(err + video);
+            Seek.findSeek({"video": video._id}, function (seeks) {
+                res.json(seeks);
+            });
+        })
+    })
+    .get('/video/:id/volumechange', function (req, res) {
+        var videoId = req.params.id;
+        Video.findOne({"_id":videoId}, function(err,video){
+            if (err || !video) res.send(err + video);
+            VolumeChange.findVolumeChange({"video": video._id}, function (volumeChanges) {
+                res.json(volumeChanges);
+            });
+        })
     });
 
 module.exports = router;
