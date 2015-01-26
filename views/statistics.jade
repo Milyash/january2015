@@ -1,0 +1,17 @@
+extends layout
+block content
+    ol.breadcrumb(style="background-color:#252525")
+    #data
+        if page
+            script(src="/scripts/statistics_drawer.js")
+                    div#volumeDiagram(style="display:inline-block;")
+                    div#viewsDiagram(style="display:inline-block;")
+        else
+            h4 This page doesn't exist!
+            a.btn.btn-danger(href="/page")
+                span.glyphicon.glyphicon-arrow-left
+                | Return
+        if page
+            a.btn.btn-primary(style="margin:20px 0px 20px 2px", href="#{page.url}")
+                | Go to the site
+
