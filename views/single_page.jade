@@ -46,7 +46,9 @@ block content
                                     each video, i in videos
                                         tr
                                             td #{i + 1}.
-                                            td #{video.name}
+                                            td
+                                                a(href="#statistics", aria-controls="statistics", role="tab", data-toggle="tab" )
+                                                    | #{video.name}
                                             td
                                                 a(href="#{video.url}")
                                                     if(video.url.length > 50)
@@ -65,6 +67,7 @@ block content
 
                     div#volumeDiagram(style="display:inline-block;")
                     div#viewsDiagram(style="display:inline-block;")
+
 
                     //ul.nav.nav-tabs(role="tablist")
                     //    li.active(role="presentation")
