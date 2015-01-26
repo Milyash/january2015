@@ -58,6 +58,7 @@ app.use(session({secret: 'secret-for-encode-session-data'}));
 var api = require('./routes/api');
 var user_controller = require('./routes/users_controller');
 var page_controller = require('./routes/page_controller');
+var statistics_controller = require('./routes/statistics_controller');
 var routes = require('./routes/index');
 
 function isAuth(req,res,next){
@@ -82,7 +83,9 @@ function templateVars(req, res, next) {
 app.use('/api', templateVars, api);
 app.use('/page', templateVars, isAuth, page_controller);
 app.use('/users', templateVars, user_controller);
+app.use('/stat', templateVars, isAuth, statistics_controller);
 app.use('/', templateVars, isAuth, routes);
+
 
 
 // catch 404 and forward to error handler

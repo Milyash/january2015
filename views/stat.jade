@@ -1,0 +1,11 @@
+//
+   Created by Milya on 26.01.2015.
+
+extends layout
+block content
+   #data
+      //content
+      div.div-simple-little-table
+         ul
+            each video in videos
+               li(style="margin:10px; color:white") #{video}
