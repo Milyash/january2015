@@ -15,7 +15,7 @@ VolumeChangeSchema.methods.createVolumeChange = function (time, from_volume, to_
         this.from_volume = from_volume;
         this.to_volume = to_volume;
         this.video = video;
-    } else {    
+    } else {
         this.time = null;
         this.from_volume = null;
         this.to_volume = null;

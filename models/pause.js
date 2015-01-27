@@ -27,7 +27,7 @@ PauseSchema.methods.savePause = function (req, res) {
         console.log("Pause is not created!");
 };
 
-PauseSchema.statics.findPause = function (pauses, next) {
+PauseSchema.statics.findPause = function (options, next) {
     var opts = options || {};
     opts._type = 'Pause';
     this.find(

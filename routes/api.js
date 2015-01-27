@@ -143,7 +143,7 @@ router
         var videoId = req.params.id;
         Video.findOne({"_id":videoId}, function(err,video){
             if (err || !video) res.send(err + video);
-            Play.findPlay({"video": video._id}, function (plays) {
+            Play.findPlay({"video": video}, function (plays) {
                 res.json(plays);
             });
         })
@@ -152,8 +152,8 @@ router
         var videoId = req.params.id;
         Video.findOne({"_id":videoId}, function(err,video){
             if (err || !video) res.send(err + video);
-            Pause.findPause({"video": video._id}, function (pauses) {
-                res.json(plays);
+            Pause.findPause({"video": video}, function (pauses) {
+                res.json(pauses);
             });
         })
     })
@@ -161,7 +161,7 @@ router
         var videoId = req.params.id;
         Video.findOne({"_id":videoId}, function(err,video){
             if (err || !video) res.send(err + video);
-            Seek.findSeek({"video": video._id}, function (seeks) {
+            Seek.findSeek({"video": video}, function (seeks) {
                 res.json(seeks);
             });
         })
@@ -170,7 +170,7 @@ router
         var videoId = req.params.id;
         Video.findOne({"_id":videoId}, function(err,video){
             if (err || !video) res.send(err + video);
-            VolumeChange.findVolumeChange({"video": video._id}, function (volumeChanges) {
+            VolumeChange.findVolumeChange({"video": video}, function (volumeChanges) {
                 res.json(volumeChanges);
             });
         })
