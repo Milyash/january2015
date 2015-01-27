@@ -3,9 +3,20 @@
 
 extends layout
 block content
-   #data
-      //content
-      div.div-simple-little-table
-         ul
+
+    #data
+        //content
+        div.div-simple-little-table(style="width:200px; position:absolute; left:100px; top:70px;")
             each video in videos
-               li(style="margin:10px; color:white") #{video}
+                ul.nav.nav-stacked
+                    li
+                        a.a-black(href='#' id = video.id onclick="setVideoId(this.id)")
+                            |#{video.name}
+            //ul
+            //    each video in videos
+            //        li(style="margin:10px; color:white")
+
+        script(src="/scripts/statistics_drawer.js")
+        div#volumeDiagram(style="display:inline-block; float:right")
+        div#viewsDiagram(style="display:inline-block; float:right")
+    script(src="/scripts/statistics_drawer.js")

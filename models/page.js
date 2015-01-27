@@ -10,6 +10,8 @@ var WebpageSchema = new Schema({
     name: {type: String, trim: true},
     url: {type: String, unique: true, lowercase: true, trim: true},
     token: String,
+    userId: Schema.ObjectId,
+    //user: {type: Schema.ObjectId, ref: "User", childPath: "pages"},
     active: Boolean,
     videos: [{type: Schema.ObjectId, ref: "Video"}]
 });

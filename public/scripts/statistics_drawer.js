@@ -1,4 +1,6 @@
 google.load('visualization', '1', {packages: ['corechart']});
+
+
 //initializing variables
 {
     var volumeStatisticsData = [];
@@ -16,6 +18,7 @@ google.load('visualization', '1', {packages: ['corechart']});
     var volumeDowns = [];
     var vAxisMax = 2;
     var vAxisMin = 2;
+    var videoId = 0;
 }
 //getting data from rest
 {
@@ -24,12 +27,12 @@ google.load('visualization', '1', {packages: ['corechart']});
             type: "GET",
             dataType: "JSON",
             async: false,
-            url: "/api/volumechange/" + id,
+            url: "/api/video/" + id + "/volumechange/",
             success: function (data) {
                 volumeStatisticsData = data;
             },
             error: function (errorData) {
-                alert("Something went wrong while performing the operation " + errorData);
+//                alert("Something went wrong while performing the operation " + errorData);
             }
         });
     }
@@ -39,7 +42,7 @@ google.load('visualization', '1', {packages: ['corechart']});
             type: "GET",
             dataType: "JSON",
             async: false,
-            url: "/api/play/" + id,
+            url: "/api/video/" + id + "/play/",
             success: function (data) {
                 playStatisticsData = data;
             },
@@ -54,7 +57,7 @@ google.load('visualization', '1', {packages: ['corechart']});
             type: "GET",
             dataType: "JSON",
             async: false,
-            url: "/api/pause/" + id,
+            url: "/api/video/" + id + "/pause/",
             success: function (data) {
                 pauseStatisticsData = data;
             },
@@ -69,7 +72,7 @@ google.load('visualization', '1', {packages: ['corechart']});
             type: "GET",
             dataType: "JSON",
             async: false,
-            url: "/api/seek/" + id,
+            url: "/api/video/" + id + "/seek/",
             success: function (data) {
                 seekStatisticsData = data;
             },
@@ -83,143 +86,142 @@ google.load('visualization', '1', {packages: ['corechart']});
 }
 //for test
 {
-    playStatisticsData = [
-        {"_id": "54976e2d1b13111c2afa7f45", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 0, "video_id": "player2", "__v": 0},
-        {"_id": "54b30f811b13111c2afa8354", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 0, "video_id": "player2", "__v": 0},
-        {"_id": "54b30f851b13111c2afa8357", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 0.073, "video_id": "player2", "__v": 0},
-        {"_id": "54b30f8c1b13111c2afa835b", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "video_id": "player2", "__v": 0},
-        {"_id": "54b30f8f1b13111c2afa835e", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "video_id": "player2", "__v": 0},
-        {"_id": "54b30f931b13111c2afa8361", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 16.32, "video_id": "player2", "__v": 0},
-        {"_id": "54b30f931b13111c2afa8363", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 16.481, "video_id": "player2", "__v": 0},
-        {"_id": "54b30f9b1b13111c2afa8365", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 19.04, "video_id": "player2", "__v": 0},
-        {"_id": "54bda25e29510cbc022b4d21", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 0, "video_id": "player2", "__v": 0},
-        {"_id": "54bda32d29510cbc022b4d2a", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 0, "video_id": "player2", "__v": 0},
-        {"_id": "54c4815629510cbc022b5696", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 0, "video_id": "player2", "__v": 0},
-        {"_id": "54c4816029510cbc022b569c", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 8.44, "video_id": "player2", "__v": 0},
-        {"_id": "54c4816429510cbc022b569f", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 91.232, "video_id": "player2", "__v": 0},
-        {"_id": "54c4816829510cbc022b56a1", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 92.8, "video_id": "player2", "__v": 0}
-    ];
-    pauseStatisticsData = [
-        {"_id": "54976e351b13111c2afa7f4b", "_type": "Pause", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 7.12, "video_id": "player2", "__v": 0},
-        {"_id": "54b30f851b13111c2afa8356", "_type": "Pause", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 0.073, "video_id": "player2", "__v": 0},
-        {"_id": "54b30f8c1b13111c2afa835a", "_type": "Pause", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "video_id": "player2", "__v": 0},
-        {"_id": "54b30f8f1b13111c2afa835d", "_type": "Pause", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "video_id": "player2", "__v": 0},
-        {"_id": "54b30f931b13111c2afa8360", "_type": "Pause", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 16.083, "video_id": "player2", "__v": 0},
-        {"_id": "54b30f931b13111c2afa8362", "_type": "Pause", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 16.32, "video_id": "player2", "__v": 0},
-        {"_id": "54b30f961b13111c2afa8364", "_type": "Pause", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 18.84, "video_id": "player2", "__v": 0},
-        {"_id": "54bda32a29510cbc022b4d28", "_type": "Pause", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 203.84, "video_id": "player2", "__v": 0},
-        {"_id": "54bda33829510cbc022b4d2e", "_type": "Pause", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 10.6, "video_id": "player2", "__v": 0},
-        {"_id": "54c4816029510cbc022b569b", "_type": "Pause", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 8.44, "video_id": "player2", "__v": 0},
-        {"_id": "54c4816129510cbc022b569d", "_type": "Pause", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 47.88, "video_id": "player2", "__v": 0},
-        {"_id": "54c4816529510cbc022b56a0", "_type": "Pause", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 92.64, "video_id": "player2", "__v": 0},
-        {"_id": "54c4816929510cbc022b56a3", "_type": "Pause", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 93.8, "video_id": "player2", "__v": 0}
-    ];
-    seekStatisticsData = [
-        {"_id": "54bda32c29510cbc022b4d29", "_type": "Seek", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time_from": 0, "time_to": 3.44, "video_id": "player2", "__v": 0},
-        {"_id": "54c4816029510cbc022b569a", "_type": "Seek", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time_from": 4.55, "time_to": 46.66, "video_id": "player2", "__v": 0},
-        {"_id": "54c4816229510cbc022b569e", "_type": "Seek", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time_from": 55.04, "time_to": 48.55, "video_id": "player2", "__v": 0}
-    ];
-    volumeStatisticsData = [
-        {
-            "_id": "54976d801b13111c2afa7f34",
-            "_type": "VolumeChange",
-            "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html",
-            "video_url": "http://player.vimeo.com/video/24285155?api=1&player_id=player1&byline=0&portrait=0&color=d4400e",
-            "from_volume": 0.042,
-            "to_volume": 0.5,
-            "time": 5.298,
-            "video_id": "player1",
-            "__v": 0
-        },
-        {
-            "_id": "54976db01b13111c2afa7f39",
-            "_type": "VolumeChange",
-            "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html",
-            "video_url": "http://player.vimeo.com/video/24285155?api=1&player_id=player1&byline=0&portrait=0&color=d4400e",
-            "from_volume": 0.5,
-            "to_volume": 0.792,
-            "time": 8.968,
-            "video_id": "player1",
-            "__v": 0
-        },
-        {
-            "_id": "54976db01b13111c2afa7f39",
-            "_type": "VolumeChange",
-            "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html",
-            "video_url": "http://player.vimeo.com/video/24285155?api=1&player_id=player1&byline=0&portrait=0&color=d4400e",
-            "from_volume": 0.5,
-            "to_volume": 0.792,
-            "time": 8.968,
-            "video_id": "player1",
-            "__v": 0
-        },
-        {
-            "_id": "54976db21b13111c2afa7f3a",
-            "_type": "VolumeChange",
-            "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html",
-            "video_url": "http://player.vimeo.com/video/24285155?api=1&player_id=player1&byline=0&portrait=0&color=d4400e",
-            "from_volume": 0.792,
-            "to_volume": 0.417,
-            "time": 11.303,
-            "video_id": "player1",
-            "__v": 0
-        },
-        {
-            "_id": "54976e2d1b13111c2afa7f46",
-            "_type": "VolumeChange",
-            "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html",
-            "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B",
-            "from_volume": 0.042,
-            "to_volume": 0.417,
-            "time": 0,
-            "video_id": "player2",
-            "__v": 0
-        },
-        {
-            "_id": "54976e301b13111c2afa7f47",
-            "_type": "VolumeChange",
-            "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html",
-            "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B",
-            "from_volume": 0.417,
-            "to_volume": 0.75,
-            "time": 1.28,
-            "video_id": "player2",
-            "__v": 0
-        },
-        {
-            "_id": "54976e311b13111c2afa7f48",
-            "_type": "VolumeChange",
-            "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html",
-            "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B",
-            "from_volume": 0.75,
-            "to_volume": 0.458,
-            "time": 2.64,
-            "video_id": "player2",
-            "__v": 0
-        },
-        {
-            "_id": "54976e341b13111c2afa7f49",
-            "_type": "VolumeChange",
-            "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html",
-            "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B",
-            "from_volume": 0.458,
-            "to_volume": 0.583,
-            "time": 5.32,
-            "video_id": "player2",
-            "__v": 0
-        },
-        {
-            "_id": "54976e341b13111c2afa7f49",
-            "_type": "VolumeChange",
-            "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html",
-            "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B",
-            "from_volume": 0.458,
-            "to_volume": 0.583,
-            "time": 5.32,
-            "video_id": "player2",
-            "__v": 0
-        }
-    ];
+    function setTestData() {
+        playStatisticsData = [
+            {"_id": "54976e2d1b13111c2afa7f45", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 0, "video_id": "player2", "__v": 0},
+            {"_id": "54b30f811b13111c2afa8354", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 0, "video_id": "player2", "__v": 0},
+            {"_id": "54b30f851b13111c2afa8357", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 0.073, "video_id": "player2", "__v": 0},
+            {"_id": "54b30f931b13111c2afa8361", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 16.32, "video_id": "player2", "__v": 0},
+            {"_id": "54b30f931b13111c2afa8363", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 16.481, "video_id": "player2", "__v": 0},
+            {"_id": "54b30f9b1b13111c2afa8365", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 19.04, "video_id": "player2", "__v": 0},
+            {"_id": "54bda25e29510cbc022b4d21", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 0, "video_id": "player2", "__v": 0},
+            {"_id": "54bda32d29510cbc022b4d2a", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 0, "video_id": "player2", "__v": 0},
+            {"_id": "54c4815629510cbc022b5696", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 0, "video_id": "player2", "__v": 0},
+            {"_id": "54c4816029510cbc022b569c", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 8.44, "video_id": "player2", "__v": 0},
+            {"_id": "54c4816429510cbc022b569f", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 91.232, "video_id": "player2", "__v": 0},
+            {"_id": "54c4816829510cbc022b56a1", "_type": "Play", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 92.8, "video_id": "player2", "__v": 0}
+        ];
+        pauseStatisticsData = [
+            {"_id": "54976e351b13111c2afa7f4b", "_type": "Pause", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 7.12, "video_id": "player2", "__v": 0},
+            {"_id": "54b30f851b13111c2afa8356", "_type": "Pause", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 0.073, "video_id": "player2", "__v": 0},
+            {"_id": "54b30f931b13111c2afa8360", "_type": "Pause", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 16.083, "video_id": "player2", "__v": 0},
+            {"_id": "54b30f931b13111c2afa8362", "_type": "Pause", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 16.32, "video_id": "player2", "__v": 0},
+            {"_id": "54b30f961b13111c2afa8364", "_type": "Pause", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 18.84, "video_id": "player2", "__v": 0},
+            {"_id": "54bda32a29510cbc022b4d28", "_type": "Pause", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 203.84, "video_id": "player2", "__v": 0},
+            {"_id": "54bda33829510cbc022b4d2e", "_type": "Pause", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 10.6, "video_id": "player2", "__v": 0},
+            {"_id": "54c4816029510cbc022b569b", "_type": "Pause", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 8.44, "video_id": "player2", "__v": 0},
+            {"_id": "54c4816129510cbc022b569d", "_type": "Pause", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 47.88, "video_id": "player2", "__v": 0},
+            {"_id": "54c4816529510cbc022b56a0", "_type": "Pause", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 92.64, "video_id": "player2", "__v": 0},
+            {"_id": "54c4816929510cbc022b56a3", "_type": "Pause", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 93.8, "video_id": "player2", "__v": 0}
+        ];
+        seekStatisticsData = [
+            {"_id": "54bda32c29510cbc022b4d29", "_type": "Seek", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time_from": 0, "time_to": 3.44, "video_id": "player2", "__v": 0},
+            {"_id": "54c4816029510cbc022b569a", "_type": "Seek", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time_from": 4.55, "time_to": 46.66, "video_id": "player2", "__v": 0},
+            {"_id": "54c4816229510cbc022b569e", "_type": "Seek", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time_from": 55.04, "time_to": 48.55, "video_id": "player2", "__v": 0}
+        ];
+        volumeStatisticsData = [
+            {
+                "_id": "54976d801b13111c2afa7f34",
+                "_type": "VolumeChange",
+                "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html",
+                "video_url": "http://player.vimeo.com/video/24285155?api=1&player_id=player1&byline=0&portrait=0&color=d4400e",
+                "from_volume": 0.042,
+                "to_volume": 0.5,
+                "time": 5.298,
+                "video_id": "player1",
+                "__v": 0
+            },
+            {
+                "_id": "54976db01b13111c2afa7f39",
+                "_type": "VolumeChange",
+                "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html",
+                "video_url": "http://player.vimeo.com/video/24285155?api=1&player_id=player1&byline=0&portrait=0&color=d4400e",
+                "from_volume": 0.5,
+                "to_volume": 0.792,
+                "time": 8.968,
+                "video_id": "player1",
+                "__v": 0
+            },
+            {
+                "_id": "54976db01b13111c2afa7f39",
+                "_type": "VolumeChange",
+                "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html",
+                "video_url": "http://player.vimeo.com/video/24285155?api=1&player_id=player1&byline=0&portrait=0&color=d4400e",
+                "from_volume": 0.5,
+                "to_volume": 0.792,
+                "time": 8.968,
+                "video_id": "player1",
+                "__v": 0
+            },
+            {
+                "_id": "54976db21b13111c2afa7f3a",
+                "_type": "VolumeChange",
+                "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html",
+                "video_url": "http://player.vimeo.com/video/24285155?api=1&player_id=player1&byline=0&portrait=0&color=d4400e",
+                "from_volume": 0.792,
+                "to_volume": 0.417,
+                "time": 11.303,
+                "video_id": "player1",
+                "__v": 0
+            },
+            {
+                "_id": "54976e2d1b13111c2afa7f46",
+                "_type": "VolumeChange",
+                "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html",
+                "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B",
+                "from_volume": 0.042,
+                "to_volume": 0.417,
+                "time": 0,
+                "video_id": "player2",
+                "__v": 0
+            },
+            {
+                "_id": "54976e301b13111c2afa7f47",
+                "_type": "VolumeChange",
+                "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html",
+                "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B",
+                "from_volume": 0.417,
+                "to_volume": 0.75,
+                "time": 1.28,
+                "video_id": "player2",
+                "__v": 0
+            },
+            {
+                "_id": "54976e311b13111c2afa7f48",
+                "_type": "VolumeChange",
+                "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html",
+                "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B",
+                "from_volume": 0.75,
+                "to_volume": 0.458,
+                "time": 2.64,
+                "video_id": "player2",
+                "__v": 0
+            },
+            {
+                "_id": "54976e341b13111c2afa7f49",
+                "_type": "VolumeChange",
+                "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html",
+                "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B",
+                "from_volume": 0.458,
+                "to_volume": 0.583,
+                "time": 5.32,
+                "video_id": "player2",
+                "__v": 0
+            },
+            {
+                "_id": "54976e341b13111c2afa7f49",
+                "_type": "VolumeChange",
+                "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex.html",
+                "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B",
+                "from_volume": 0.458,
+                "to_volume": 0.583,
+                "time": 5.32,
+                "video_id": "player2",
+                "__v": 0
+            }
+        ];
+    }
+
 }
 //views diagram
 {
@@ -253,9 +255,10 @@ google.load('visualization', '1', {packages: ['corechart']});
         ;
         for (var i = 0; i < seekStatisticsData.length; i++) {
             var data = seekStatisticsData[i];
-            data.time_to = data.time_to.toFixed(0);
-            data.time_from = data.time_from.toFixed(0);
+
             if ((data.time_to != undefined) && (data.time_from)) {
+                data.time_to = data.time_to.toFixed(0);
+                data.time_from = data.time_from.toFixed(0);
                 if (data.time_to > data.time_from) {
                     if (viewsDataObject.hasOwnProperty(data.time_to)) {
                         viewsDataObject[data.time_to]++;
@@ -268,15 +271,15 @@ google.load('visualization', '1', {packages: ['corechart']});
                         viewsDataObject[data.time_from] = -1;
                     }
                 } else {
+//                    if (viewsDataObject.hasOwnProperty(data.time_to)) {
+//                        viewsDataObject[data.time_to]--;
+//                    } else {
+//                        viewsDataObject[data.time_to] = -1;
+//                    }
                     if (viewsDataObject.hasOwnProperty(data.time_to)) {
-                        viewsDataObject[data.time_to]--;
+                        viewsDataObject[data.time_to]++;
                     } else {
-                        viewsDataObject[data.time_to] = -1;
-                    }
-                    if (viewsDataObject.hasOwnProperty(data.time_from)) {
-                        viewsDataObject[data.time_from]++;
-                    } else {
-                        viewsDataObject[data.time_from] = 1;
+                        viewsDataObject[data.time_to] = 1;
                     }
                 }
             }
@@ -285,21 +288,37 @@ google.load('visualization', '1', {packages: ['corechart']});
         for (var time in viewsDataObject) {
             var data = viewsDataObject[time];
             quantity = quantity + data;
+            if (quantity < 0) {
+                quantity = 0;
+            }
+            ;
             viewsDataArray.push([parseInt(time), quantity]);
         }
     };
     var viewsOptions = {
+        animation: {
+            duration: 700
+        },
         title: 'Views',
         backgroundColor: "transparent",
         width: 900,
         height: 400,
         hAxis: {title: 'Time'},
-        vAxis: {title: 'Views'}
+        vAxis: {title: 'Views', minValue: 0}
     };
-    formViewsDataForDiagram();
+//    formViewsDataForDiagram();
     var chart2 = new google.visualization.AreaChart(document.getElementById('viewsDiagram'));
-    var viewsData = google.visualization.arrayToDataTable(viewsDataArray);
-    chart2.draw(viewsData, viewsOptions);
+//    var viewsData = google.visualization.arrayToDataTable(viewsDataArray);
+//    chart2.draw(viewsData, viewsOptions);
+
+    function refreshViewsDiagram(id) {
+        getPlayData(id);
+        getPauseData(id);
+        getSeekData(id);
+        formViewsDataForDiagram();
+        viewsData = google.visualization.arrayToDataTable(viewsDataArray);
+        chart2.draw(viewsData, viewsOptions);
+    }
 
 }
 //volume diagram
@@ -320,6 +339,11 @@ google.load('visualization', '1', {packages: ['corechart']});
         volumeDataArray = [
             ['ID', 'Time', 'Quantity of Watchers', 'Type', 'Difference']
         ];
+        if (volumeStatisticsData.length > 0) {
+            document.getElementById("volumeDiagram").style.display = "inline-block";
+        } else {
+            document.getElementById("volumeDiagram").style.display = "none";
+        }
         for (var i = 0; i < volumeStatisticsData.length; i++) {
             var data = volumeStatisticsData[i];
             if (data.time != undefined) {
@@ -374,10 +398,11 @@ google.load('visualization', '1', {packages: ['corechart']});
     };
     var chart = new google.visualization.BubbleChart(document.getElementById('volumeDiagram'));
 
-    function refreshVolumeDiagram() {
+    function refreshVolumeDiagram(id) {
 //get data from api
         volumeUps = [];
         volumeDowns = [];
+        getVolumeData(id);
         formVolumeDataForDiagram();
         var volumeData = google.visualization.arrayToDataTable(volumeDataArray);
         volumeDiagramOptions.vAxis.viewWindow = {max: vAxisMax, min: -vAxisMin};
@@ -385,12 +410,20 @@ google.load('visualization', '1', {packages: ['corechart']});
     }
 
 
-    function refreshDiagrams() {
-        var path = window.location.pathname;
-        var splittedPath = path.split("/");
-        var videoId = splittedPath[splittedPath.length - 1];
-        refreshVolumeDiagram();
+    function refreshDiagrams(id) {
+        setTestData();
+//        var path = window.location.pathname;
+//        var splittedPath = path.split("/");
+//        var videoId = splittedPath[splittedPath.length - 1];
+        refreshVolumeDiagram(id);
+        refreshViewsDiagram(id);
     }
 
-    refreshDiagrams();
+//
+//    refreshDiagrams();
+}
+function setVideoId(id) {
+//    alert(id);
+    videoId = id;
+    refreshDiagrams(id);
 }

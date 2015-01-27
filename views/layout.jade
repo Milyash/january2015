@@ -24,7 +24,7 @@ html
         #bs-example-navbar-collapse-1.collapse.navbar-collapse
           ul.nav.navbar-nav
             li
-              a.navbar-brand(href="#", style="margin-right:80px") WeNeedName
+              a.navbar-brand(href="#", style="margin-right:80px") We Track
             li.active
               a(href="/page") Web pages
                 span.sr-only (current)
@@ -39,17 +39,23 @@ html
                 a.a-black(href="#statistics", aria-controls="statistics", role="tab", data-toggle="tab") Statistics
 
           ul.nav.navbar-nav.navbar-right
-            li.dropdown
-              a#user.dropdown-toggle(href="#", data-toggle="dropdown", role="button", aria-expanded="false")
-                spaan.glyphicon.glyphicon-user
-                  //| User-Huuser
-                |  #{req.session.user? req.session.user.username : 'User'}
-                span.caret
-              ul.navbar-inverse.dropdown-menu(role="menu")
-                li
-                  a.a-menu_dropdown(href="/users/logout")
-                    span.glyphicon.glyphicon-arrow-left
-                    |  Logout
+            if(req.session.userId)
+              li.dropdown
+                a#user.dropdown-toggle(href="#", data-toggle="dropdown", role="button", aria-expanded="false")
+                  span.glyphicon.glyphicon-user
+                  |  #{req.session.user.username}
+                  span.caret
+                ul.navbar-inverse.dropdown-menu(role="menu")
+                  li
+                    a.a-menu_dropdown(href="/users/logout")
+                      span.glyphicon.glyphicon-arrow-left
+                      |  Logout
+            else
+              li
+                a#user(href="/users/login")
+                  span.glyphicon.glyphicon-user
+                  |  Login
+
     #content
 
       //div#menu.navbar.navbar-inverse.clearfix(style="margin-right: 10px;")
