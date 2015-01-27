@@ -59,6 +59,7 @@ var api = require('./routes/api');
 var user_controller = require('./routes/users_controller');
 var page_controller = require('./routes/page_controller');
 var statistics_controller = require('./routes/statistics_controller');
+var video_controller = require('./routes/video_controller');
 var routes = require('./routes/index');
 
 function isAuth(req,res,next){
@@ -84,6 +85,7 @@ app.use('/api', templateVars, api);
 app.use('/page', templateVars, isAuth, page_controller);
 app.use('/users', templateVars, user_controller);
 app.use('/stat', templateVars, isAuth, statistics_controller);
+app.use('/video', templateVars, isAuth, video_controller);
 app.use('/', templateVars, isAuth, routes);
 
 
