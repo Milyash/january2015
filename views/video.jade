@@ -1,32 +1,43 @@
 extends layout
 block content
     #data
+
+
         if videos.length > 0
-            div.div-simple-little-table
-                span Registered videos to track
-                table.simple-little-table
-                    thead
-                        tr
-                            th #
-                            th Name
-                            th Url
-                            th Preview
-                    tbody
-                    each video, i in videos
-                        tr
-                            td #{i + 1}.
-                            td
-                                a(href="#statistics", aria-controls="statistics", role="tab", data-toggle="tab" )
-                                    | #{video.name}
-                            td
-                                a(href="#{video.url}")
-                                    if(video.url.length > 50)
-                                            | #{video.url.substr(0, 49) + '...'}
-                                    else
-                                        | #{video.url}
-                            td
-                                img(src="#{video.picture}", style="width:150px")
+            .tab-content
+                .tab-pane.fade#statistics(role="tabpanel")
+                    a.btn.btn-primary(style="margin:10px 0px 20px 2px", href="#videos" aria-controls="videos", role="tab", data-toggle="tab")
+                        | Back to videos
+                    script(src="/scripts/statistics_drawer.js")
+                    div#volumeDiagram(style="display:inline-block;")
+                    div#viewsDiagram(style="display:inline-block;")
+                .tab-pane.fade.in.active#videos(role="tabpanel")
+                    div.div-simple-little-table
+                        span Registered videos to track
+                        table.simple-little-table
+                            thead
+                                tr
+                                    th #
+                                    th Name
+                                    th Url
+                                    th Preview
+                            tbody
+                            each video, i in videos
+                                tr
+                                    td #{i + 1}.
+                                    td
+                                        a(href="#statistics", aria-controls="statistics", role="tab", data-toggle="tab",id=video.id,onclick="setVideoId(this.id)" )
+                                            | #{video.name}
+                                    td
+                                        a(href="#{video.url}")
+                                            if(video.url.length > 50)
+                                                    | #{video.url.substr(0, 49) + '...'}
+                                            else
+                                                | #{video.url}
+                                    td
+                                        img(src="#{video.picture}", style="width:150px")
 
 
         else
             p There are no videos registered for tracking!
+    script(src="/scripts/statistics_drawer.js")
