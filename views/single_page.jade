@@ -9,7 +9,7 @@ block content
 
     #data
         if page
-            h4.pull-left(style="margin-bottom: 20px; color:white; text-shadow: 1px 2px 0 #000000; width:70%") Page #{page.name}
+            h4.pull-left(style="margin-bottom: 20px; color:#B6B6B6;  width:70%") Page: #{page.name}
             button#delete-page.btn.btn-danger.btn-xs.pull-right(type="button", data-id="#{page._id}", style="margin:0px 2px")
                 span.glyphicon.glyphicon-remove
                 | Delete
@@ -47,7 +47,7 @@ block content
                                         tr
                                             td #{i + 1}.
                                             td
-                                                a(href="#statistics", aria-controls="statistics", role="tab", data-toggle="tab" )
+                                                a(href="#statistics",id=video.id, aria-controls="statistics", role="tab", data-toggle="tab" onclick="setVideoId(this.id)")
                                                     | #{video.name}
                                             td
                                                 a(href="#{video.url}")
@@ -63,8 +63,9 @@ block content
                         p There are no videos registered for tracking!
 
                 .tab-pane.fade#statistics(role="tabpanel")
+                    a.btn.btn-primary(style="margin:10px 0px 20px 2px", href="#videos" aria-controls="videos", role="tab", data-toggle="tab")
+                        | Back to videos of #{page.name}
                     script(src="/scripts/statistics_drawer.js")
-
                     div#volumeDiagram(style="display:inline-block;")
                     div#viewsDiagram(style="display:inline-block;")
 
