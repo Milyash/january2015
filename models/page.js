@@ -22,7 +22,7 @@ WebpageSchema.path('name').validate(function (value) {
 
 WebpageSchema.path('url').validate(function (value) {
 
-    return /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/.test(value);
+    return /^(https?:\/\/)?([\da-z\.-]+)(\.[a-z\.]{2,6})?(\:\d+)?([\/\w \.-]*)*\/?$/.test(value);
 }, 'Invalid url');
 
 WebpageSchema.path('url').validate(function(value, done) {
