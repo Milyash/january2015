@@ -97,6 +97,7 @@ block content
                 .modal-footer
                     button.btn.btn-default(type="button", data-dismiss="modal") Close
     script.
+        $("#li_web_pages").addClass("active");
         $('#webpageEditModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget);
             var webpageName = button.data('name');

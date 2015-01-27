@@ -8,7 +8,7 @@ google.load('visualization', '1', {packages: ['corechart']});
     var pauseStatisticsData = [];
     var seekStatisticsData = [];
     var volumeDataArray = [
-        ['ID', 'Time', 'Quantity of Watchers', 'Type', 'Difference'],
+        ['ID', 'Time', 'Quantity of Watchers', 'Type', 'Difference']
     ];
     var viewsDataArray = [
         ['Time', 'Views']
