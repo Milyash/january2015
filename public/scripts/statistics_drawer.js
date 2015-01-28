@@ -256,19 +256,19 @@ google.load('visualization', '1', {packages: ['corechart']});
         for (var i = 0; i < seekStatisticsData.length; i++) {
             var data = seekStatisticsData[i];
 
-            if ((data.time_to != undefined) && (data.time_from)) {
+            if ((data.time_to != undefined) && (data.time)) {
                 data.time_to = data.time_to.toFixed(0);
-                data.time_from = data.time_from.toFixed(0);
-                if (data.time_to > data.time_from) {
+                data.time = data.time.toFixed(0);
+                if (data.time_to > data.time) {
                     if (viewsDataObject.hasOwnProperty(data.time_to)) {
                         viewsDataObject[data.time_to]++;
                     } else {
                         viewsDataObject[data.time_to] = 1;
                     }
-                    if (viewsDataObject.hasOwnProperty(data.time_from)) {
-                        viewsDataObject[data.time_from]--;
+                    if (viewsDataObject.hasOwnProperty(data.time)) {
+                        viewsDataObject[data.time]--;
                     } else {
-                        viewsDataObject[data.time_from] = -1;
+                        viewsDataObject[data.time] = -1;
                     }
                 } else {
 //                    if (viewsDataObject.hasOwnProperty(data.time_to)) {
