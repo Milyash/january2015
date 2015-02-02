@@ -95,6 +95,8 @@ router
             play.createPlay(req.body.time, video);
             play.savePlay(req, res);
         });
+
+        res.end()
     })
 
     .post('/pause', function (req, res) {
@@ -103,6 +105,8 @@ router
             pause.createPause(req.body.time, video);
             pause.savePause(req, res);
         });
+
+        res.end()
     })
     .post('/seek', function (req, res) {
         var seek = new Seek();
@@ -110,6 +114,7 @@ router
             seek.createSeek(req.body.time_from, req.body.time_to, video);
             seek.saveSeek(req, res);
         });
+        res.end()
     })
     .post('/volumechange', function (req, res) {
         var volumeChange = new VolumeChange();
@@ -117,6 +122,7 @@ router
             volumeChange.createVolumeChange(req.body.time, req.body.from_volume, req.body.to_volume, video);
             volumeChange.saveVolumeChange(req, res);
         });
+        res.end()
     })
 
     .get('/play', function (req, res) {

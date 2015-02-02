@@ -34,7 +34,8 @@ catch (err) {
 }
 
 //Connect to mongo DB
-mongoose.connect('mongodb://localhost:' + parameters.db_port + '/' + parameters.db_name);
+mongoose.connect('mongodb://localhost:' + parameters.db_port + '/' + parameters.db_name,
+    { server: { poolSize: 10 } });
 var db = mongoose.connection;
 
 
