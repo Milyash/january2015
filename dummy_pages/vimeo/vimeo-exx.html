@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <link href="../style_player.css" rel="stylesheet">
 
-    <script src="../Libraries/jquery-1.11.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.2.js"></script>
     <script src="http://a.vimeocdn.com/js/froogaloop2.min.js?97273-1352487961"></script>
 </head>
 
@@ -48,52 +48,58 @@
 
 </div>
 <script type="text/javascript">
+$(function() {
     var token = '33f131bb-4a3b-476e-9a4d-0f776a0df6ee';
-    $('iframe.video').load(function () {
-        var iframe = this
-        var player = $f(iframe);
+    $('iframe.video').each(function () {
+        var iframes = { }
+		iframes[this.id] = this 
+        var player = $f(this);
+		var current_volume = {};
+		var current_time = {};
+		
         var urlBase = "http://localhost:3000";
-        player.addEvent('ready', function () {
-            var current_volume;
-            var current_time = 0;
-            player.api("getVolume", function (volume) {
-                current_volume = volume;
+		console.log(player)
+        player.addEvent('ready', function (id) {
+			var locPlayer = $f(iframes[id])
+            
+            locPlayer.api("getVolume", function (volume) {
+                current_volume[id] = volume;
             });
-            player.addEvent('play', onPlay);
-            player.addEvent('pause', onPause);
-            player.addEvent('seek', onSeek);
-            player.addEvent('playProgress', onPlayProgress);
+            locPlayer.addEvent('play', onPlay);
+            locPlayer.addEvent('pause', onPause);
+            locPlayer.addEvent('seek', onSeek);
+            locPlayer.addEvent('playProgress', onPlayProgress);
             function onPlayProgress(data, id) {
                 var new_volume;
-                player.api("getVolume", function (volume) {
+                locPlayer.api("getVolume", function (volume) {
                     new_volume = volume;
-                    if (current_volume != new_volume) {
+                    if (current_volume[id] != new_volume) {
                         data = {};
                         data.page_url = $(location).attr('href');
-                        data.video_url = $(iframe).attr('src');
-                        data.video_name = $(iframe).attr('alt');
+                        data.video_url = $(iframes[id]).attr('src');
+                        data.video_name = $(iframes[id]).attr('alt');
                         data.event = "volumechange";
-                        data.from_volume = current_volume;
+                        data.from_volume = current_volume[id];
                         data.to_volume = new_volume;
-                        data.time = current_time;
+                        data.time = current_time[id];
                         data.video_id = id;
                         data.token = token;
                         postData(data, urlBase + "/api/volumechange");
-                        current_volume = new_volume;
+                        current_volume[id] = new_volume;
                     }
-                    current_time = data.seconds;
+                    current_time[id] = data.seconds;
                 });
             }
 
             function onPlay(id) {
                 var dataToSend = {};
                 dataToSend.page_url = $(location).attr('href');
-                dataToSend.video_url = $(iframe).attr('src');
-                dataToSend.video_name = $(iframe).attr('alt');
+                dataToSend.video_url = $(iframes[id]).attr('src');
+                dataToSend.video_name = $(iframes[id]).attr('alt');
                 console.log($(location).attr('href'));
-                console.log($(iframe).attr('src'));
+                console.log($(iframes[id]).attr('src'));
                 dataToSend.event = "play";
-                dataToSend.time = current_time;
+                dataToSend.time = current_time[id];
                 dataToSend.video_id = id;
                 dataToSend.token = token;
                 postData(dataToSend, urlBase + "/api/play");
@@ -101,10 +107,10 @@
             function onPause(id) {
                 var dataToSend = {};
                 dataToSend.page_url = $(location).attr('href');
-                dataToSend.video_url = $(iframe).attr('src');
-                dataToSend.video_name = $(iframe).attr('alt');
+                dataToSend.video_url = $(iframes[id]).attr('src');
+                dataToSend.video_name = $(iframes[id]).attr('alt');
                 dataToSend.event = "pause";
-                dataToSend.time = current_time;
+                dataToSend.time = current_time[id];
                 dataToSend.video_id = id;
                 dataToSend.token = token;
                 postData(dataToSend, urlBase + "/api/pause");
@@ -112,10 +118,10 @@
             function onSeek(data, id) {
                 var dataToSend = {};
                 dataToSend.page_url = $(location).attr('href');
-                dataToSend.video_url = $(iframe).attr('src');
-                dataToSend.video_name = $(iframe).attr('alt');
+                dataToSend.video_url = $(iframes[id]).attr('src');
+                dataToSend.video_name = $(iframes[id]).attr('alt');
                 dataToSend.event = "seek";
-                dataToSend.time_from = current_time;
+                dataToSend.time_from = current_time[id];
                 dataToSend.time_to = data.seconds;
                 dataToSend.video_id = id;
                 dataToSend.token = token;
@@ -128,6 +134,7 @@
             console.log(data);
         });
     }
+})
 </script>
 
 </body>
