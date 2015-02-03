@@ -1,4 +1,5 @@
 node_modules/
 .idea/
 data/
-*.html
+views/stat.html
+views/video.html
