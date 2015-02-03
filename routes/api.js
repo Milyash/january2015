@@ -148,7 +148,7 @@ router
     .get('/video/:id/play', function (req, res) {
         var videoId = req.params.id;
         Video.findOne({"_id":videoId}, function(err,video){
-            if (err || !video) res.send(err + video);
+            if (err || !video) console.log(err + video);
             Play.findPlay({"video": video}, function (plays) {
                 res.json(plays);
             });
@@ -157,7 +157,7 @@ router
     .get('/video/:id/pause', function (req, res) {
         var videoId = req.params.id;
         Video.findOne({"_id":videoId}, function(err,video){
-            if (err || !video) res.send(err + video);
+            if (err || !video) console.log(err + video);
             Pause.findPause({"video": video}, function (pauses) {
                 res.json(pauses);
             });
@@ -166,7 +166,7 @@ router
     .get('/video/:id/seek', function (req, res) {
         var videoId = req.params.id;
         Video.findOne({"_id":videoId}, function(err,video){
-            if (err || !video) res.send(err + video);
+            if (err || !video) console.log(err + video);
             Seek.findSeek({"video": video}, function (seeks) {
                 res.json(seeks);
             });
@@ -175,7 +175,7 @@ router
     .get('/video/:id/volumechange', function (req, res) {
         var videoId = req.params.id;
         Video.findOne({"_id":videoId}, function(err,video){
-            if (err || !video) res.send(err + video);
+            if (err || !video) console.log(err + video);
             VolumeChange.findVolumeChange({"video": video}, function (volumeChanges) {
                 res.json(volumeChanges);
             });
