@@ -115,9 +115,9 @@ google.load('visualization', '1', {packages: ['corechart']});
             {"_id": "54c4816929510cbc022b56a3", "_type": "Pause", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex2.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 93.8, "video_id": "player2", "__v": 0}
         ];
         seekStatisticsData = [
-            {"_id": "54bda32c29510cbc022b4d29", "_type": "Seek", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex2.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time_from": 0, "time_to": 3.44, "video_id": "player2", "__v": 0},
-            {"_id": "54c4816029510cbc022b569a", "_type": "Seek", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex2.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time_from": 4.55, "time_to": 46.66, "video_id": "player2", "__v": 0},
-            {"_id": "54c4816229510cbc022b569e", "_type": "Seek", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex2.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time_from": 55.04, "time_to": 48.55, "video_id": "player2", "__v": 0}
+            {"_id": "54bda32c29510cbc022b4d29", "_type": "Seek", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex2.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 0, "time_to": 3.44, "video_id": "player2", "__v": 0},
+            {"_id": "54c4816029510cbc022b569a", "_type": "Seek", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex2.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 4.55, "time_to": 46.66, "video_id": "player2", "__v": 0},
+            {"_id": "54c4816229510cbc022b569e", "_type": "Seek", "page_url": "http://localhost:63342/VideoStatisticsApp/src/DummyPages/vimeo/vimeo-ex2.html", "video_url": "http://player.vimeo.com/video/88635031?api=1&player_id=player2&byline=0&portrait=0&color=73848B", "time": 55.04, "time_to": 48.55, "video_id": "player2", "__v": 0}
         ];
         volumeStatisticsData = [
             {
@@ -340,7 +340,7 @@ google.load('visualization', '1', {packages: ['corechart']});
 
     function formVolumeDataForDiagram() {
         volumeDataArray = [
-            ['ID', 'Time', 'Quantity of Watchers', 'Type', 'Difference']
+            ['ID','Time', 'Difference',  'Type',   'Quantity of Watchers']
         ];
         if (volumeStatisticsData.length > 0) {
             document.getElementById("volumeDiagram").style.display = "inline-block";
@@ -370,13 +370,14 @@ google.load('visualization', '1', {packages: ['corechart']});
         }
         for (var time in volumeUps) {
             var volumeUp = volumeUps[time];
-            volumeDataArray.push(['', parseInt(time), volumeUp.quantity_of_watchers, 'Volume Up',
-                parseInt(100 * (volumeUp.sum_of_differences / volumeUp.quantity_of_watchers).toFixed(2))]);
+            volumeDataArray.push(['', parseInt(time),  +(volumeUp.sum_of_differences / volumeUp.quantity_of_watchers).toFixed(2),
+                 'Volume Up', volumeUp.quantity_of_watchers
+               ]);
         }
         for (var time in volumeDowns) {
             var volumeDown = volumeDowns[time];
-            volumeDataArray.push(['', parseInt(time), -(volumeDown.quantity_of_watchers), 'Volume Down',
-                parseInt(100 * (volumeDown.sum_of_differences / volumeDown.quantity_of_watchers).toFixed(2))]);
+            volumeDataArray.push(['', parseInt(time), -(volumeDown.sum_of_differences / volumeDown.quantity_of_watchers).toFixed(2), 'Volume Down',
+                 volumeDown.quantity_of_watchers]);
         }
 
         vAxisMax = getMaximumVolumeChangers(volumeUps) + 1;
@@ -408,7 +409,7 @@ google.load('visualization', '1', {packages: ['corechart']});
         getVolumeData(id);
         formVolumeDataForDiagram();
         var volumeData = google.visualization.arrayToDataTable(volumeDataArray);
-        volumeDiagramOptions.vAxis.viewWindow = {max: vAxisMax, min: -vAxisMin};
+//        volumeDiagramOptions.vAxis.viewWindow = {max: vAxisMax, min: -vAxisMin};
         chart.draw(volumeData, volumeDiagramOptions);
     }
 
