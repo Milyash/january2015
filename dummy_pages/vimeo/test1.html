@@ -60,48 +60,51 @@
                    var iframe = $(this);
                    iframe.src = iframe.src;
                 })*/
-                $('iframe.video').load(function () {
-                    console.log("!");
-                    var iframe = this;
-                    var player = $f(iframe);
+                $('iframe.video').each(function () {
+                    var iframes = { }
+                    iframes[this.id] = this
+                    var player = $f(this);
+                    var current_volume = {};
+                    var current_time = {};
                     var urlBase = "http://localhost:3000";
-                    player.addEvent('ready', function () {
-                        console.log("r");
-                        var current_volume;
-                        var current_time = 0;
-                        player.api("getVolume", function (volume) {
-                            current_volume = volume;
+                    console.log(player)
+                    player.addEvent('ready', function (id) {
+                        console.log("@");
+                        var locPlayer = $f(iframes[id])
+
+                        locPlayer.api("getVolume", function (volume) {
+                            current_volume[id] = volume;
                         });
-                        player.addEvent('play', onPlay);
-                        player.addEvent('pause', onPause);
-                        player.addEvent('seek', onSeek);
-                        player.addEvent('playProgress', onPlayProgress);
+                        locPlayer.addEvent('play', onPlay);
+                        locPlayer.addEvent('pause', onPause);
+                        locPlayer.addEvent('seek', onSeek);
+                        locPlayer.addEvent('playProgress', onPlayProgress);
                         function onPlayProgress(data, id) {
                             var new_volume;
-                            player.api("getVolume", function (volume) {
+                            locPlayer.api("getVolume", function (volume) {
                                 new_volume = volume;
-                                if (current_volume != new_volume) {
-                                    data = createPostData($(location).attr('href'), $(iframe).attr('src'), $(iframe).attr('alt'), "volumechange", current_time, id, token);
-                                    data.from_volume = current_volume;
+                                if (current_volume[id] != new_volume) {
+                                    data = createPostData($(location).attr('href'), $(iframes[id]).attr('src'), $(iframes[id]).attr('alt'), "volumechange", current_time[id], id, token);
+                                    data.from_volume = current_volume[id];
                                     data.to_volume = new_volume;
                                     postData(data, urlBase + "/api/volumechange");
-                                    current_volume = new_volume;
+                                    current_volume[id] = new_volume;
                                 }
-                                current_time = data.seconds;
+                                current_time[id] = data.seconds;
                             });
                         }
 
                         function onPlay(id) {
                             console.log("!");
-                            var dataToSend = data = createPostData($(location).attr('href'), $(iframe).attr('src'), $(iframe).attr('alt'), "play", current_time, id, token);
+                            var dataToSend = data = createPostData($(location).attr('href'), $(iframes[id]).attr('src'), $(iframes[id]).attr('alt'), "play", current_time[id], id, token);
                             postData(dataToSend, urlBase + "/api/play");
                         };
                         function onPause(id) {
-                            var dataToSend = data = createPostData($(location).attr('href'), $(iframe).attr('src'), $(iframe).attr('alt'), "pause", current_time, id, token);
+                            var dataToSend = data = createPostData($(location).attr('href'), $(iframes[id]).attr('src'), $(iframes[id]).attr('alt'), "pause", current_time[id], id, token);
                             postData(dataToSend, urlBase + "/api/pause");
                         };
                         function onSeek(data, id) {
-                            var dataToSend = createPostData($(location).attr('href'), $(iframe).attr('src'), $(iframe).attr('alt'), "seek", current_time, id, token);
+                            var dataToSend = createPostData($(location).attr('href'), $(iframes[id]).attr('src'), $(iframes[id]).attr('alt'), "seel", current_time[id], id, token);
                             dataToSend.time_to = data.seconds;
                             postData(dataToSend, urlBase + "/api/seek");
                         };
@@ -128,8 +131,6 @@
             });
         });
     }
-
-
 </script>
 
 </body>
