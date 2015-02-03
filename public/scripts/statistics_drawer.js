@@ -254,44 +254,48 @@ google.load('visualization', '1', {packages: ['corechart']});
         }
         ;
         for (var i = 0; i < seekStatisticsData.length; i++) {
-            var data = seekStatisticsData[i];
-
-            if ((data.time_to != undefined) && (data.time)) {
-                data.time_to = data.time_to.toFixed(0);
-                data.time = data.time.toFixed(0);
-                if (data.time_to > data.time) {
-                    if (viewsDataObject.hasOwnProperty(data.time_to)) {
-                        viewsDataObject[data.time_to]++;
-                    } else {
-                        viewsDataObject[data.time_to] = 1;
-                    }
-                    if (viewsDataObject.hasOwnProperty(data.time)) {
-                        viewsDataObject[data.time]--;
-                    } else {
-                        viewsDataObject[data.time] = -1;
-                    }
-                } else {
+//            var data = seekStatisticsData[i];
+//
+//            if ((data.time_to != undefined) && (data.time)) {
+//                data.time_to = data.time_to.toFixed(0);
+//                data.time = data.time.toFixed(0);
+//                if (data.time_to > data.time) {
 //                    if (viewsDataObject.hasOwnProperty(data.time_to)) {
-//                        viewsDataObject[data.time_to]--;
+//                        viewsDataObject[data.time_to]++;
 //                    } else {
-//                        viewsDataObject[data.time_to] = -1;
+//                        viewsDataObject[data.time_to] = 1;
 //                    }
-                    if (viewsDataObject.hasOwnProperty(data.time_to)) {
-                        viewsDataObject[data.time_to]++;
-                    } else {
-                        viewsDataObject[data.time_to] = 1;
-                    }
-                }
-            }
+//                    if (viewsDataObject.hasOwnProperty(data.time)) {
+//                        viewsDataObject[data.time]--;
+//                    } else {
+//                        viewsDataObject[data.time] = -1;
+//                    }
+//                } else {
+////                    if (viewsDataObject.hasOwnProperty(data.time_to)) {
+////                        viewsDataObject[data.time_to]--;
+////                    } else {
+////                        viewsDataObject[data.time_to] = -1;
+////                    }
+//                    if (viewsDataObject.hasOwnProperty(data.time_to)) {
+//                        viewsDataObject[data.time_to]++;
+//                    } else {
+//                        viewsDataObject[data.time_to] = 1;
+//                    }
+//                }
+//            }
         }
         var quantity = 0;
+        var prev_quantity = 0;
         for (var time in viewsDataObject) {
             var data = viewsDataObject[time];
+            prev_quantity = quantity;
             quantity = quantity + data;
             if (quantity < 0) {
                 quantity = 0;
             }
             ;
+            viewsDataArray.push([parseInt(time), prev_quantity]);
+
             viewsDataArray.push([parseInt(time), quantity]);
         }
     };
@@ -315,7 +319,7 @@ google.load('visualization', '1', {packages: ['corechart']});
         getPlayData(id);
         getPauseData(id);
         getSeekData(id);
-        if(playStatisticsData.length>0){
+        if (playStatisticsData.length > 0) {
             formViewsDataForDiagram();
             viewsData = google.visualization.arrayToDataTable(viewsDataArray);
             chart2.draw(viewsData, viewsOptions);
@@ -340,7 +344,7 @@ google.load('visualization', '1', {packages: ['corechart']});
 
     function formVolumeDataForDiagram() {
         volumeDataArray = [
-            ['ID','Time', 'Difference',  'Type',   'Quantity of Watchers']
+            ['ID', 'Time', 'Difference', 'Type', 'Quantity of Watchers']
         ];
         if (volumeStatisticsData.length > 0) {
             document.getElementById("volumeDiagram").style.display = "inline-block";
@@ -370,14 +374,14 @@ google.load('visualization', '1', {packages: ['corechart']});
         }
         for (var time in volumeUps) {
             var volumeUp = volumeUps[time];
-            volumeDataArray.push(['', parseInt(time),  +(volumeUp.sum_of_differences / volumeUp.quantity_of_watchers).toFixed(2),
-                 'Volume Up', volumeUp.quantity_of_watchers
-               ]);
+            volumeDataArray.push(['', parseInt(time), +(volumeUp.sum_of_differences / volumeUp.quantity_of_watchers).toFixed(2),
+                'Volume Up', volumeUp.quantity_of_watchers
+            ]);
         }
         for (var time in volumeDowns) {
             var volumeDown = volumeDowns[time];
             volumeDataArray.push(['', parseInt(time), -(volumeDown.sum_of_differences / volumeDown.quantity_of_watchers).toFixed(2), 'Volume Down',
-                 volumeDown.quantity_of_watchers]);
+                volumeDown.quantity_of_watchers]);
         }
 
         vAxisMax = getMaximumVolumeChangers(volumeUps) + 1;
