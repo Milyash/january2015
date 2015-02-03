@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body style="background-image: url('back3.jpg'); background-repeat: no-repeat; background-size: cover">
+<div style="margin: 50px auto; width:640px">
+    <iframe id="rouge" class="video" alt="Rouge something"
+            src="//player.vimeo.com/video/118108998?color=ff0040&portrait=0&badge=0&api=1&player_id=rouge" width="500"
+            height="281"
+            frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+    <iframe id="showreel" class="video" alt="SHOWREEL"
+            src="//player.vimeo.com/video/116299154?api=1&player_id=showreel" width="500" height="281" frameborder="0"
+            webkitallowfullscreen
+            mozallowfullscreen allowfullscreen></iframe>
+
+
+</div>
+<script>
+    if (!window.jQuery) {
+        var script = document.createElement('script');
+        script.type = "text/javascript";
+        script.src = "//code.jquery.com/jquery-1.11.2.min.js";
+        document.getElementsByTagName('head')[0].appendChild(script);
+
+        var loadHandlerAlreadyRun = false;
+        script.onload = function () {
+            if (!loadHandlerAlreadyRun) {
+                loadHandlerAlreadyRun = true;
+                snippet();
+            }
+        };
+        script.onreadystatechange = function () {
+            if (!loadHandlerAlreadyRun && (this.readyState === "loaded" || this.readyState === "complete")) {
+                loadHandlerAlreadyRun = true;
+                snippet();
+            }
+        }
+    }
+    else
+        snippet();
+
+    function snippet() {
+        $(document).ready(function () {
+            console.log("jquery loaded");
+            $.getScript('http://a.vimeocdn.com/js/froogaloop2.min.js', function () {
+                console.log("!!!");
+                var token = '652a8741-3475-4f0c-b2b2-7405f9b69b58';
+               /*$('iframe.video').each(function(){
+                    var addition = "api=1&video_id=" + $(this).attr("id");
+                    var video_src = $(this).attr("src");
+                    if (video_src.indexOf("?") === -1)
+                        addition = "?" + addition;
+                    else
+                        addition = "&" + addition;
+                    $(this).attr("src", video_src + addition);
+                    console.log($(this).attr("src"));
+                   var iframe = $(this);
+                   iframe.src = iframe.src;
+                })*/
+                $('iframe.video').load(function () {
+                    console.log("!");
+                    var iframe = this;
+                    var player = $f(iframe);
+                    var urlBase = "http://localhost:3000";
+                    player.addEvent('ready', function () {
+                        console.log("r");
+                        var current_volume;
+                        var current_time = 0;
+                        player.api("getVolume", function (volume) {
+                            current_volume = volume;
+                        });
+                        player.addEvent('play', onPlay);
+                        player.addEvent('pause', onPause);
+                        player.addEvent('seek', onSeek);
+                        player.addEvent('playProgress', onPlayProgress);
+                        function onPlayProgress(data, id) {
+                            var new_volume;
+                            player.api("getVolume", function (volume) {
+                                new_volume = volume;
+                                if (current_volume != new_volume) {
+                                    data = createPostData($(location).attr('href'), $(iframe).attr('src'), $(iframe).attr('alt'), "volumechange", current_time, id, token);
+                                    data.from_volume = current_volume;
+                                    data.to_volume = new_volume;
+                                    postData(data, urlBase + "/api/volumechange");
+                                    current_volume = new_volume;
+                                }
+                                current_time = data.seconds;
+                            });
+                        }
+
+                        function onPlay(id) {
+                            console.log("!");
+                            var dataToSend = data = createPostData($(location).attr('href'), $(iframe).attr('src'), $(iframe).attr('alt'), "play", current_time, id, token);
+                            postData(dataToSend, urlBase + "/api/play");
+                        };
+                        function onPause(id) {
+                            var dataToSend = data = createPostData($(location).attr('href'), $(iframe).attr('src'), $(iframe).attr('alt'), "pause", current_time, id, token);
+                            postData(dataToSend, urlBase + "/api/pause");
+                        };
+                        function onSeek(data, id) {
+                            var dataToSend = createPostData($(location).attr('href'), $(iframe).attr('src'), $(iframe).attr('alt'), "seek", current_time, id, token);
+                            dataToSend.time_to = data.seconds;
+                            postData(dataToSend, urlBase + "/api/seek");
+                        };
+                    });
+                });
+                function postData(dataToSend, route) {
+                    console.log("send");
+                    $.post(route, dataToSend, function (data) {
+                        console.log(data);
+                    });
+                }
+
+                function createPostData(page_url, video_url, video_name, event_type, time, video_id, token) {
+                    var dataToSend = {};
+                    dataToSend.page_url = page_url;
+                    dataToSend.video_url = video_url;
+                    dataToSend.video_name = video_name;
+                    dataToSend.event = event_type;
+                    dataToSend.time_from = time;
+                    dataToSend.video_id = video_id;
+                    dataToSend.token = token;
+                    return dataToSend;
+                }
+            });
+        });
+    }
+
+
+</script>
+
+</body>
+</html>

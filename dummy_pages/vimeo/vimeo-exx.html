@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Photoshop tutorials</title>
+    <meta charset="UTF-8">
+    <link href="../style_player.css" rel="stylesheet">
+
+    <script src="../Libraries/jquery-1.11.0.min.js"></script>
+    <script src="http://a.vimeocdn.com/js/froogaloop2.min.js?97273-1352487961"></script>
+</head>
+
+<body style="background-repeat: no-repeat;  background-image: url('http://cdn.eteknix.com/wp-content/uploads/2014/01/Adobe-Photoshop-Cs5-Wide-Screen-Desktop-Wallpaper.jpg'); background-size: cover; padding: 0px">
+
+
+
+<div style="margin: 0px auto; width:640px; color: white; text-align: center; padding: 30px">
+    <h2>Photoshop effects</h2>
+    </div>
+
+<div style="margin: 50px auto; width:640px">
+
+    <div style="margin: 0px auto; width:640px; color: white; text-align: center">
+        <h4>Aquarel effect</h4>
+    </div>
+    <iframe id="player1" class="video"
+            src="http://player.vimeo.com/video/91406125?api=1&player_id=player1&byline=0&portrait=0&color=d4400e"
+            alt="Aquarel effect" width="640" height="300" frameborder="0"
+            webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+    <div style="margin: 0px auto; width:640px; color: white; text-align: center">
+        <h4>Aquarel effect</h4>
+    </div>
+    <iframe id="player2" class="video"
+            src="http://player.vimeo.com/video/24013642?api=1&player_id=player2&byline=0&portrait=0&color=d4400e"
+            alt="Vintage Effect" width="640" height="300" frameborder="0" webkitallowfullscreen
+            mozallowfullscreen allowfullscreen></iframe>
+
+    <div style="margin: 0px auto; width:640px; color: white; text-align: center">
+        <h4>Stylized Gradient Effect</h4>
+    </div>
+    <iframe id="player3" class="video"
+            src="http://player.vimeo.com/video/28960049?api=1&player_id=player3&byline=0&portrait=0&color=d4400e"
+            alt="Stylized Gradient Effect" width="640" height="300" frameborder="0" webkitallowfullscreen
+            mozallowfullscreen allowfullscreen></iframe>
+
+</div>
+
+
+</div>
+<script type="text/javascript">
+    var token = '33f131bb-4a3b-476e-9a4d-0f776a0df6ee';
+    $('iframe.video').load(function () {
+        var iframe = this
+        var player = $f(iframe);
+        var urlBase = "http://localhost:3000";
+        player.addEvent('ready', function () {
+            var current_volume;
+            var current_time = 0;
+            player.api("getVolume", function (volume) {
+                current_volume = volume;
+            });
+            player.addEvent('play', onPlay);
+            player.addEvent('pause', onPause);
+            player.addEvent('seek', onSeek);
+            player.addEvent('playProgress', onPlayProgress);
+            function onPlayProgress(data, id) {
+                var new_volume;
+                player.api("getVolume", function (volume) {
+                    new_volume = volume;
+                    if (current_volume != new_volume) {
+                        data = {};
+                        data.page_url = $(location).attr('href');
+                        data.video_url = $(iframe).attr('src');
+                        data.video_name = $(iframe).attr('alt');
+                        data.event = "volumechange";
+                        data.from_volume = current_volume;
+                        data.to_volume = new_volume;
+                        data.time = current_time;
+                        data.video_id = id;
+                        data.token = token;
+                        postData(data, urlBase + "/api/volumechange");
+                        current_volume = new_volume;
+                    }
+                    current_time = data.seconds;
+                });
+            }
+
+            function onPlay(id) {
+                var dataToSend = {};
+                dataToSend.page_url = $(location).attr('href');
+                dataToSend.video_url = $(iframe).attr('src');
+                dataToSend.video_name = $(iframe).attr('alt');
+                console.log($(location).attr('href'));
+                console.log($(iframe).attr('src'));
+                dataToSend.event = "play";
+                dataToSend.time = current_time;
+                dataToSend.video_id = id;
+                dataToSend.token = token;
+                postData(dataToSend, urlBase + "/api/play");
+            };
+            function onPause(id) {
+                var dataToSend = {};
+                dataToSend.page_url = $(location).attr('href');
+                dataToSend.video_url = $(iframe).attr('src');
+                dataToSend.video_name = $(iframe).attr('alt');
+                dataToSend.event = "pause";
+                dataToSend.time = current_time;
+                dataToSend.video_id = id;
+                dataToSend.token = token;
+                postData(dataToSend, urlBase + "/api/pause");
+            };
+            function onSeek(data, id) {
+                var dataToSend = {};
+                dataToSend.page_url = $(location).attr('href');
+                dataToSend.video_url = $(iframe).attr('src');
+                dataToSend.video_name = $(iframe).attr('alt');
+                dataToSend.event = "seek";
+                dataToSend.time_from = current_time;
+                dataToSend.time_to = data.seconds;
+                dataToSend.video_id = id;
+                dataToSend.token = token;
+                postData(dataToSend, urlBase + "/api/seek");
+            };
+        });
+    });
+    function postData(dataToSend, route) {
+        $.post(route, dataToSend, function (data) {
+            console.log(data);
+        });
+    }
+</script>
+
+</body>
+</html>
