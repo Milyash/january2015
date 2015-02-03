@@ -68,20 +68,18 @@
                     var current_time = {};
                     var urlBase = "http://localhost:3000";
                     console.log(player)
-                    player.addEvent('ready', function (id) {
-                        console.log("@");
-                        var locPlayer = $f(iframes[id])
-
-                        locPlayer.api("getVolume", function (volume) {
+                    //player.addEvent('ready', function (id) {
+                        //var locPlayer = $f(iframes[id])
+                        player.api("getVolume", function (volume) {
                             current_volume[id] = volume;
                         });
-                        locPlayer.addEvent('play', onPlay);
-                        locPlayer.addEvent('pause', onPause);
-                        locPlayer.addEvent('seek', onSeek);
-                        locPlayer.addEvent('playProgress', onPlayProgress);
+                        player.addEvent('play', onPlay);
+                        player.addEvent('pause', onPause);
+                        player.addEvent('seek', onSeek);
+                        player.addEvent('playProgress', onPlayProgress);
                         function onPlayProgress(data, id) {
                             var new_volume;
-                            locPlayer.api("getVolume", function (volume) {
+                            $f(iframes[id]).api("getVolume", function (volume) {
                                 new_volume = volume;
                                 if (current_volume[id] != new_volume) {
                                     data = createPostData($(location).attr('href'), $(iframes[id]).attr('src'), $(iframes[id]).attr('alt'), "volumechange", current_time[id], id, token);
@@ -108,7 +106,7 @@
                             dataToSend.time_to = data.seconds;
                             postData(dataToSend, urlBase + "/api/seek");
                         };
-                    });
+                    //});
                 });
                 function postData(dataToSend, route) {
                     console.log("send");
