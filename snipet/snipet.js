@@ -2,7 +2,7 @@ var token = '||';
 $('iframe.video').load(function () {
     var iframe = this
     var player = $f(iframe);
-    var urlBase = "http://85.143.216.173";
+    var urlBase = "http://localhost:3000";
     player.addEvent('ready', function () {
         var current_volume;
         var current_time = 0;
