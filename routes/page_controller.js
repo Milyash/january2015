@@ -91,7 +91,7 @@ router
                     if (err) {
                         return console.log(err);
                     }
-                    data = data.replace(/\|\|/, page.token);
+                    data = data.replace(/\|\|\|/, page.token);
                     res.json({"snipet": data});
                 });
             });

@@ -111,7 +111,7 @@ router
     .post('/seek', function (req, res) {
         var seek = new Seek();
         createEvent(req, function (video) {
-            seek.createSeek(req.body.time_from, req.body.time_to, video);
+            seek.createSeek(req.body.time, req.body.time_to, video);
             seek.saveSeek(req, res);
         });
         res.end()
