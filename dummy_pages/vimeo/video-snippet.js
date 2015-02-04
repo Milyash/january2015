@@ -26,12 +26,15 @@ function snippet() {
         console.log("jquery loaded");
         $.getScript('http://a.vimeocdn.com/js/froogaloop2.min.js', function () {
             var token = '652a8741-3475-4f0c-b2b2-7405f9b69b58';
+			var iframes = {}
+			var current_volume = {};
+			var current_time = {};
             $('iframe.video').each(function () {
-                var iframes = {}
                 iframes[this.id] = this
+				current_volume[this.id]=0
+				current_time[this.id]=0
+				
                 var player = $f(this);
-                var current_volume = {};
-                var current_time = {};
                 var urlBase = "http://localhost:3000";
                 console.log(player)
                 player.api("getVolume", function (volume, id) {
