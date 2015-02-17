@@ -65,15 +65,19 @@ var routes = require('./routes/index');
 
 function isAuth(req,res,next){
     if(req.session.userId){
-        User.findOne({ _id : req.session.userId }, function(err, user) {
+            User.findOne({ _id : req.session.userId }, function(err, user) {
             if(user) {
                 req.session.user = user
                 next();
             } else {
+                if(req.method == 'GET' && !req.xhr)
+                    req.session.requestedUrl = req.url
                 res.redirect('/users/login');
             }
         })
     } else {
+        if(req.method == 'GET' && !req.xhr)
+            req.session.requestedUrl = req.url
         res.redirect('/users/login');
     }
 }

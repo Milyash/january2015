@@ -26,7 +26,7 @@ router.post('/login', isNotAuth, function (req, res) {
             return
         }
         req.session.userId = user.id
-        res.redirect('/page')
+        res.redirect(req.session.requestedUrl ? req.session.requestedUrl : '/page')
     })
 });
 

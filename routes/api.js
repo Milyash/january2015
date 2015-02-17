@@ -32,7 +32,9 @@ function getPage(request, next) {
 }
 
 function setVideoThumbnail(video) {
-    var videoId = video.url.match(/vimeo\.com\/video\/(\d+)/)[1];
+    var parseVimeoId = video.url.match(/vimeo\.com\/video\/(\d+)/)
+    if(!parseVimeoId) return
+    var videoId = parseVimeoId[1];
     if (videoId != null || videoId != undefined || videoId != "") {
         var options = {
             hostname: 'vimeo.com',
