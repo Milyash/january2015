@@ -27,7 +27,6 @@ function initSnippet(token) {
             console.log("jquery loaded");
 
             $.getScript('http://a.vimeocdn.com/js/froogaloop2.min.js', function () {
-                var token = '|||';
                 var iframes = {}
                 var current_volume = {};
                 var current_time = {};

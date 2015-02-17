@@ -154,8 +154,8 @@ block content
                 type: 'DELETE',
                 data: {'page_id': page_id}
             })
-                    .done(function () {
-                        alert("The page deleted!");
+                    .done(function (data) {
+                        alert(data.message);
                         location.reload();
                     });
         });

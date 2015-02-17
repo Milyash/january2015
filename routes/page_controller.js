@@ -3,8 +3,10 @@
  */
 var express = require('express');
 var router = express.Router();
+var mongoose = require('mongoose');
 var Page = require('./../models/page');
 var Video = require('./../models/video');
+var Event = mongoose.model('Event');
 var uuid = require('node-uuid');
 fs = require('fs');
 
@@ -52,14 +54,27 @@ router
                     res.send(404);
                     return
                 }
-                page.active = false;
-                page.save(function (err) {
+
+                Video.find({ page: page._id }, function(err, videos) {
+                    if(err || !videos) return
+                    for(var i in videos) {
+                        var video = videos[i]
+                        Event.find({ video: video._id }, function(err, evnts) {
+                            if(err || !evnts)
+                                return
+                            for(var i in evnts)
+                                evnts[i].remove()
+                        })
+                        video.remove()
+                    }
+                })
+                page.remove(function (err) {
                     if (err) {
                         res.json(err);
                         return
                     }
-                    res.json({"message": "Changes saved!"});
-                })
+                    res.json({"message": "Page removed!"});
+                });
             }
         )
 
@@ -87,13 +102,8 @@ router
             function (err, page) {
                 if (err) console.log(err);
                 if (page == undefined || page == null) console.log('Page is not found!');
-                fs.readFile('snipet/snipet.js', 'utf8', function (err, data) {
-                    if (err) {
-                        return console.log(err);
-                    }
-                    data = data.replace(/\|\|\|/, page.token);
-                    res.json({"snipet": data});
-                });
+                res.json({ "snipet": '<script src="//' + req.headers.host + '/scripts/snipet.js"></script>\n' +
+                    '<script>initSnippet("' +page.token +'")</script>'})
             });
     })
 
