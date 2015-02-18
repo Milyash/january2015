@@ -71,13 +71,13 @@ function isAuth(req,res,next){
                 next();
             } else {
                 if(req.method == 'GET' && !req.xhr)
-                    req.session.requestedUrl = req.url
+                    req.session.requestedUrl = req.originalUrl
                 res.redirect('/users/login');
             }
         })
     } else {
         if(req.method == 'GET' && !req.xhr)
-            req.session.requestedUrl = req.url
+            req.session.requestedUrl = req.originalUrl
         res.redirect('/users/login');
     }
 }
